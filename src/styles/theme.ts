@@ -100,12 +100,22 @@ const TEXTAREA_SIZE = {
   LARGE: { width: '880px', height: '343px' },
 };
 
+const MIXIN = {
+  FLEX: ({ direction = 'row', align = 'center', justify = 'center' }) => `
+    display: flex;
+    flex-direction: ${direction};
+    justify-content: ${justify};
+    align-items: ${align};
+  `,
+};
+
 const THEME = {
   COLORS,
   FONTSTYLES,
   BUTTON_SIZE,
   TEXT_INPUT_SIZE,
   TEXTAREA_SIZE,
+  MIXIN,
 };
 
 export default THEME;
