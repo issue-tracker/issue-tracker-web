@@ -6,6 +6,7 @@ import Milestone from '@/assets/icons/milestone.svg?component';
 import Plus from '@/assets/icons/plus.svg?component';
 import RefreshCcw from '@/assets/icons/refresh-ccw.svg?component';
 import Search from '@/assets/icons/search.svg?component';
+import SmallLabel from '@/assets/icons/smallLabel.svg?component';
 import Smile from '@/assets/icons/smile.svg?component';
 import Tag from '@/assets/icons/tag.svg?component';
 import Trash from '@/assets/icons/trash.svg?component';
@@ -22,6 +23,7 @@ export {
   Plus,
   RefreshCcw,
   Search,
+  SmallLabel,
   Smile,
   Tag,
   Trash,
