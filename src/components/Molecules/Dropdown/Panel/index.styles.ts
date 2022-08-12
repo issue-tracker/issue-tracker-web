@@ -40,13 +40,12 @@ export const PanelItem = styled.li`
 
     &:checked ~ label::after {
       margin-top: 4px;
-      content: url(${checkOffCircle});
+      content: url(${checkOnCircle});
     }
   }
 
   label {
-    display: flex;
-    align-items: center;
+    ${({ theme }) => theme.MIXIN.FLEX({ align: 'center', justify: 'space-between' })};
     cursor: pointer;
     height: 28px;
 
@@ -57,7 +56,7 @@ export const PanelItem = styled.li`
 
     &::after {
       margin-top: 4px;
-      content: url(${checkOnCircle});
+      content: url(${checkOffCircle});
     }
   }
 `;
