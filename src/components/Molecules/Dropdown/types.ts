@@ -21,6 +21,12 @@ export interface UserTypes {
 
 export interface IssueTypes {
   id: number;
+  dataId: string;
+  title: string;
+}
+
+export interface UNUSED_OPTIONS_TYPES {
+  dataId: string;
   title: string;
 }
 
@@ -28,6 +34,7 @@ export interface DropdownPanelsTypes {
   panelTitle: string;
   panelType: 'checkbox' | 'radio';
   panelList: LabelTypes[] | UserTypes[] | IssueTypes[];
+  unusedOption?: UNUSED_OPTIONS_TYPES;
 }
 
 // Panel/Label Types

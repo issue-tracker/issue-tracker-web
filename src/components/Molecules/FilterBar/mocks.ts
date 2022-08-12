@@ -6,11 +6,11 @@ export const FILTERBAR_INFO: FILTERBAR_INFO_TYPES = {
     indicatorLabel: '필터',
     indicatorStyle: 'FILTERBAR',
     panelTitle: '체크박스 필터',
-    panelType: 'checkbox',
+    panelType: 'radio',
     panelList: ISSUE_FILTER_LIST,
   },
   INPUT: {
-    placeholder: 'is:issue is:open',
+    placeholder: 'Search all issues',
     defaultValue: 'is:issue is:open',
   },
 };

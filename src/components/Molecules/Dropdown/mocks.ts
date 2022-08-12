@@ -1,16 +1,34 @@
 import { IssueTypes, LabelTypes, UserTypes } from '@/components/Molecules/Dropdown/types';
 
+export const UNUSED_OPTIONS = {
+  ASSIGNEE: {
+    dataId: 'no:assignee',
+    title: '담당자가 없는 이슈',
+  },
+  LABEL: {
+    dataId: 'no:label',
+    title: '레이블이 없는 이슈',
+  },
+  MILESTONE: {
+    dataId: 'no:milestone',
+    title: '마일스톤이 없는 이슈',
+  },
+};
+
 export const ISSUE_FILTER_LIST: IssueTypes[] = [
   {
     id: 0,
+    dataId: 'open',
     title: '열린 이슈',
   },
   {
     id: 1,
+    dataId: '@me',
     title: '내가 작성한 이슈',
   },
   {
     id: 2,
+    dataId: 'closed',
     title: '닫힌 이슈',
   },
 ];

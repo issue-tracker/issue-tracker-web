@@ -1,6 +1,6 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Dropdown from '@/components/Molecules/Dropdown';
-import { USER_LIST } from '@/components/Molecules/Dropdown/mocks';
+import { UNUSED_OPTIONS, USER_LIST } from '@/components/Molecules/Dropdown/mocks';
 
 export default {
   title: 'Molecules/Dropdown',
@@ -11,9 +11,10 @@ const Template: ComponentStory<typeof Dropdown> = (args) => <Dropdown {...args} 
 
 export const Initial = Template.bind({});
 Initial.args = {
-  indicatorLabel: '타이틀',
-  indicatorStyle: 'STANDARD',
-  panelTitle: '체크박스 필터',
-  panelType: 'checkbox',
+  indicatorLabel: '담당자',
+  indicatorStyle: 'FILTERBAR',
+  panelTitle: '담당자 필터',
+  panelType: 'radio',
   panelList: USER_LIST,
+  unusedOption: UNUSED_OPTIONS.ASSIGNEE,
 };

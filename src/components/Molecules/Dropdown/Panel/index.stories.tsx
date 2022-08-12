@@ -1,6 +1,6 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import DropdownPanel from '@/components/Molecules/Dropdown/Panel';
-import { ISSUE_FILTER_LIST, LABEL_LIST, USER_LIST } from '@/components/Molecules/Dropdown/mocks';
+import { ISSUE_FILTER_LIST, LABEL_LIST, UNUSED_OPTIONS, USER_LIST } from '@/components/Molecules/Dropdown/mocks';
 
 export default {
   title: 'Molecules/Dropdown/Panel',
@@ -18,9 +18,10 @@ Initial.args = {
 
 export const Checkbox = Template.bind({});
 Checkbox.args = {
-  panelTitle: '체크박스 필터(라벨o)',
+  panelTitle: '체크박스 필터 (라벨o)',
   panelType: 'checkbox',
   panelList: LABEL_LIST,
+  unusedOption: UNUSED_OPTIONS.LABEL,
 };
 
 export const Radio = Template.bind({});
@@ -28,4 +29,5 @@ Radio.args = {
   panelTitle: '라디오 필터',
   panelType: 'radio',
   panelList: USER_LIST,
+  unusedOption: UNUSED_OPTIONS.ASSIGNEE,
 };
