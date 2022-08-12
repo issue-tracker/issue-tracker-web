@@ -5,13 +5,16 @@ import CheckBox from '@/components/Atoms/CheckBox';
 import Icon from '@/components/Atoms/Icon';
 import NavLink from '@/components/Molecules/NavLink';
 import IssueItem, { IssueInfoTypes } from '@/components/Molecules/IssueItem';
-
+import Dropdown from '@/components/Molecules/Dropdown';
 import { CheckState, IssueTableCheckState } from '@/stores/checkBox';
 
 import * as S from '@/components/Organisms/IssueTable/index.styles';
+import { DropdownTypes } from '@/components/Molecules/Dropdown/types';
+import { OPEN_CLOSE_DROPDOWN_ARGS } from '@/components/Molecules/Dropdown/mocks';
 
 interface IssueTableTypes {
   issueListData: IssueInfoTypes[];
+  filterTabs: DropdownTypes[];
 }
 
 const openCloseIssue = [
@@ -27,7 +30,7 @@ const openCloseIssue = [
   },
 ];
 
-const IssueTable = ({ issueListData }: IssueTableTypes) => {
+const IssueTable = ({ issueListData, filterTabs }: IssueTableTypes) => {
   const [checkState, setCheckState] = useRecoilState(CheckState);
   const { checkedIssueNum } = useRecoilValue(IssueTableCheckState);
 
@@ -38,31 +41,21 @@ const IssueTable = ({ issueListData }: IssueTableTypes) => {
   return (
     <S.StyledIssueTable>
       <S.IssueHeader>
-        <tr>
-          <th>
-            <CheckBox id={-1} type="parent" checked={checkState.parent} />
-            <S.IssueStates>
-              {checkedIssueNum > 0 ? (
-                <span>{`${checkedIssueNum}개 이슈 선택`}</span>
-              ) : (
-                <NavLink navData={openCloseIssue} />
-              )}
-            </S.IssueStates>
-            <S.IssueInfoTabs>
-              {checkedIssueNum > 0 ? <span>상태 수정</span> : <span>담당자 레이블 마일스톤 작성자</span>}
-            </S.IssueInfoTabs>
-          </th>
-        </tr>
+        <CheckBox id={-1} type="parent" checked={checkState.parent} />
+        <S.IssueStates>
+          {checkedIssueNum ? <span>{`${checkedIssueNum}개 이슈 선택`}</span> : <NavLink navData={openCloseIssue} />}
+        </S.IssueStates>
+        <S.IssueInfoTabs>
+          {checkedIssueNum ? (
+            <Dropdown {...OPEN_CLOSE_DROPDOWN_ARGS} />
+          ) : (
+            filterTabs.map((info) => <Dropdown {...info} />)
+          )}
+        </S.IssueInfoTabs>
       </S.IssueHeader>
-      <S.IssueContent>
-        {issueListData.map((props) => (
-          <tr key={props.id}>
-            <td>
-              <IssueItem issueInfo={props} />
-            </td>
-          </tr>
-        ))}
-      </S.IssueContent>
+      {issueListData.map((props) => (
+        <IssueItem key={props.id} issueInfo={props} />
+      ))}
     </S.StyledIssueTable>
   );
 };

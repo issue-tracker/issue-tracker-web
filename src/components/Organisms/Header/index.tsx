@@ -9,7 +9,7 @@ interface HeaderTypes {
 }
 
 const Header = ({ user }: HeaderTypes) => {
-  const { id, profileImage } = user;
+  const { id, nickname, profileImage } = user;
   const [clickTab, setclickTab] = useState<boolean>(false);
 
   return (
@@ -17,7 +17,7 @@ const Header = ({ user }: HeaderTypes) => {
       <Logo logoSize="Medium" />
       <S.UserTab onClick={() => setclickTab((prev) => !prev)}>
         <Icon icon="Menu" />
-        <UserImage id={id} profileImage={profileImage} imgSize="MEDIUM" />
+        <UserImage id={id} nickname={nickname} profileImage={profileImage} imgSize="MEDIUM" />
       </S.UserTab>
       <S.LogoutButton clickTab={clickTab}>로그아웃</S.LogoutButton>
     </S.Header>

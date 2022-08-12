@@ -13,7 +13,7 @@ export const StyledNavLinks = styled.div<StyledNavLinkTypes>`
         border: 1px solid ${({ theme }) => theme.COLORS.LINE};
 
         a {
-          padding: 12px 32px;
+          padding: 6px 32px;
         }
 
         a + a {
