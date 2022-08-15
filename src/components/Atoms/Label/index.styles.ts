@@ -19,7 +19,8 @@ export const Label = styled.div<StyledLabelTypes>`
         border: 1px solid;
         border-color: ${lighten(0.2, backgroundColor)};
       `;
-    } else if (labelStyle === 'LIGHT') {
+    }
+    if (labelStyle === 'LIGHT') {
       return css`
         background: ${backgroundColor};
         color: ${backgroundColor === '#ffffff' ? '#000' : '#FFF'};

@@ -1,3 +1,4 @@
+import React from 'react';
 import * as S from '@/components/Molecules/NavLink/index.styles';
 
 interface NavDataTypes {
@@ -11,7 +12,7 @@ export interface NavLinkTypes {
   navLinkStyle?: 'NORMAL' | 'LINE';
 }
 
-export const NavLink = ({ navData, navLinkStyle = 'NORMAL' }: NavLinkTypes) => (
+const NavLink = ({ navData, navLinkStyle = 'NORMAL' }: NavLinkTypes) => (
   <S.StyledNavLinks navLinkStyle={navLinkStyle}>
     {navData.map(({ icon, title, link }) => (
       <S.StyledNavLink key={title} to={link} navLinkStyle={navLinkStyle}>

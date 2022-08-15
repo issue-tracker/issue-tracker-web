@@ -1,13 +1,4 @@
-import { ComponentStory, ComponentMeta } from '@storybook/react';
-import IssueTable from '@/components/Organisms/IssueTable';
 import { COLORS } from '@/styles/theme';
-
-export default {
-  title: 'Organisms/IssueTable',
-  component: IssueTable,
-} as ComponentMeta<typeof IssueTable>;
-
-const Template: ComponentStory<typeof IssueTable> = (args) => <IssueTable {...args} />;
 
 const DEFAULT_COLORS = COLORS.PRIMARY.BLUE;
 
@@ -81,8 +72,3 @@ export const issueListData = [
     milestone: '마스터즈 코스',
   },
 ];
-
-export const Initial = Template.bind({});
-Initial.args = {
-  issueListData,
-};

@@ -3,7 +3,13 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: ['plugin:react/recommended', 'plugin:prettier/recommended', 'airbnb', 'plugin:storybook/recommended'],
+  extends: [
+    'plugin:react/recommended',
+    'plugin:prettier/recommended',
+    'airbnb',
+    'plugin:storybook/recommended',
+    'prettier',
+  ],
   settings: {
     'import/parsers': {
       '@typescript-eslint/parser': ['.ts', '.tsx'],
@@ -56,6 +62,15 @@ module.exports = {
       2,
       {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
+    ],
+    'no-unused-vars': 'off',
+    'import/no-cycle': 'off',
+    'import/prefer-default-export': 'off',
+    'jsx-a11y/label-has-associated-control': [
+      'error',
+      {
+        labelAttributes: ['htmlFor'],
       },
     ],
   },

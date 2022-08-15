@@ -11,13 +11,7 @@ const DropdownPanel = ({ ...props }: DropdownPanelsTypes) => {
       <ul>
         {unusedOption && (
           <S.PanelItem>
-            <input
-              id={unusedOption.dataId}
-              type={panelType}
-              name={panelTitle}
-              data-id={unusedOption.dataId}
-              onClick={(e) => console.log(e.currentTarget.dataset.id)}
-            />
+            <input id={unusedOption.dataId} type={panelType} name={panelTitle} data-id={unusedOption.dataId} />
             <label htmlFor={unusedOption.dataId}>
               <span>{unusedOption.title}</span>
             </label>
@@ -34,13 +28,7 @@ const DropdownPanel = ({ ...props }: DropdownPanelsTypes) => {
 
           return (
             <S.PanelItem key={ITEM_KEY}>
-              <input
-                id={ITEM_KEY}
-                type={panelType}
-                name={panelTitle}
-                data-id={DATASET_ID}
-                onClick={(e) => console.log(e.currentTarget.dataset.id)}
-              />
+              <input id={ITEM_KEY} type={panelType} name={panelTitle} data-id={DATASET_ID} />
               <label htmlFor={ITEM_KEY}>
                 {backgroundColor && <PanelPreviewLabel backgroundColor={backgroundColor} />}
                 {profileImageUrl && <PanelPreviewLabel profileImageUrl={profileImageUrl} loginId={loginId} />}

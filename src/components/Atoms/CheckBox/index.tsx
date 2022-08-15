@@ -19,7 +19,7 @@ const CheckBox = ({ id, type, checked = false }: CheckboxTypes) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   if (type === 'parent' && inputRef?.current) {
-    inputRef.current.indeterminate = checkStatsState === 'some' ? true : false;
+    inputRef.current.indeterminate = checkStatsState === 'some';
   }
 
   const onChangeCheckbox = (event: { target: HTMLInputElement }) => {

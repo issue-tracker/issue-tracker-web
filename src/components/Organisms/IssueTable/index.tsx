@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 

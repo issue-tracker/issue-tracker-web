@@ -1,5 +1,4 @@
-import { IssueTypes, LabelTypes, UserTypes } from '@/components/Molecules/Dropdown/types';
-import { DropdownTypes } from './types';
+import { IssueTypes, LabelTypes, UserTypes, DropdownTypes } from '@/components/Molecules/Dropdown/types';
 
 export const UNUSED_OPTIONS = {
   ASSIGNEE: {

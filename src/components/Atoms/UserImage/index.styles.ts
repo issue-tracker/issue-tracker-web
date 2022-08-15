@@ -13,7 +13,7 @@ export const Img = styled.img<UserImageStyleTypes>`
         width: 44px;
         height: 44px;
       `;
-    else if (imgSize === 'SMALL') {
+    if (imgSize === 'SMALL') {
       return css`
         width: 20px;
         height: 20px;

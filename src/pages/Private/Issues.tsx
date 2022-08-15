@@ -4,15 +4,18 @@ import { UserInfoState } from '@/stores/userInfo';
 import { testLoginOauth } from '@/api/testApi';
 
 import styled from 'styled-components';
-import Header from '@/components/Organisms/Header';
-import FilterBar from '@/components/Molecules/FilterBar';
-import { FILTERBAR_INFO } from '@/components/Molecules/FilterBar/mocks';
-import NavLink from '@/components/Molecules/NavLink';
+
 import Icon from '@/components/Atoms/Icon';
 import Button from '@/components/Atoms/Button';
-import IssueTable from '@/components/Organisms/IssueTable';
-import { issueListData } from '@/components/Organisms/IssueTable/IssueList.stories';
+
+import FilterBar from '@/components/Molecules/FilterBar';
+import { FILTERBAR_INFO } from '@/components/Molecules/FilterBar/mocks';
 import { FILTER_TABS_INFO } from '@/components/Molecules/Dropdown/mocks';
+import NavLink from '@/components/Molecules/NavLink';
+
+import Header from '@/components/Organisms/Header';
+import IssueTable from '@/components/Organisms/IssueTable';
+import { issueListData } from '@/components/Organisms/IssueTable/mocks';
 
 const DivContainer = styled.div`
   ${({ theme }) => theme.MIXIN.FLEX({ align: 'center', justify: 'space-between' })};
@@ -48,7 +51,7 @@ const Issues = () => {
               { icon: <Icon icon="Tag" stroke="#14142B" />, title: '레이블 (3)', link: '/label' },
               { icon: <Icon icon="Milestone" fill="#14142B" />, title: '마일스톤 (2)', link: '/milestone' },
             ]}
-            navLinkStyle={'LINE'}
+            navLinkStyle="LINE"
           />
           <Button buttonStyle="STANDARD" label="이슈작성" size="SMALL" iconInfo={{ icon: 'Plus', stroke: '#FEFEFE' }} />
         </SubNav>

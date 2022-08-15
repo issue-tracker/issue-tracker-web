@@ -28,25 +28,22 @@ export const Indicator = styled.summary<StyledDropdownIndicatorTypes>`
     }
   }
 
-  ${({ indicatorStyle }) => {
-    return (
-      indicatorStyle === 'FILTERBAR' &&
-      css`
-        padding: 6px 24px;
-        border: 1px solid ${({ theme }) => theme.COLORS.LINE};
-        border-radius: 11px 0px 0px 11px;
-        background: ${({ theme }) => theme.COLORS.BACKGROUND};
+  ${({ indicatorStyle }) =>
+    indicatorStyle === 'FILTERBAR' &&
+    css`
+      padding: 6px 24px;
+      border: 1px solid ${({ theme }) => theme.COLORS.LINE};
+      border-radius: 11px 0px 0px 11px;
+      background: ${({ theme }) => theme.COLORS.BACKGROUND};
 
-        span {
-          margin-right: 24px;
-        }
+      span {
+        margin-right: 24px;
+      }
 
-        &:hover {
-          background: ${({ theme }) => theme.COLORS.LINE};
-        }
-      `
-    );
-  }};
+      &:hover {
+        background: ${({ theme }) => theme.COLORS.LINE};
+      }
+    `};
 
   ${({ indicatorStyle, isActive }) =>
     indicatorStyle &&
