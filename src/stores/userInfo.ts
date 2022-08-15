@@ -7,6 +7,6 @@ export const UserInfoState = atom<Response>({
     id: 0,
     email: '',
     nickname: '',
-    profileImage: 'https://avatars.githubusercontent.com/u/109053323?s=64&v=4',
+    profileImage: '',
   },
 });
