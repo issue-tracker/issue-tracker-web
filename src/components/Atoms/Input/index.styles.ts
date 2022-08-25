@@ -46,7 +46,7 @@ export const Form = styled.form<FormStyleTypes>`
   ${({ isActive }) =>
     isActive &&
     css`
-      color: ${({ theme }) => theme.COLORS.PLACEHOLDER};
+      color: ${({ theme }) => theme.COLORS.TITLE_ACTIVE};
       background: ${({ theme }) => theme.COLORS.OFF_WHITE};
       border: 1px solid ${({ theme }) => theme.COLORS.TITLE_ACTIVE};
     `}
