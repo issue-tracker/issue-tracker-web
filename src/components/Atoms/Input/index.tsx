@@ -35,7 +35,11 @@ const Input = ({ disabled = false, inputMaxLength = defaultMaxLength, ...props }
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {}, [inputValue]);
+  useEffect(() => {
+    if (inputRef.current !== null && inputValue !== undefined) {
+      inputRef.current!.value = inputValue;
+    }
+  }, [inputValue]);
 
   const handleOnClickForm = () => {
     if (disabled) return;
