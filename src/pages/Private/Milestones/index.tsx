@@ -4,6 +4,7 @@ import { LoginUserInfoState } from '@/stores/loginUserInfo';
 
 import styled from 'styled-components';
 import Button from '@/components/Atoms/Button';
+import EditMileStone from '@/components/Molecules/EditMilestone';
 import NavLink from '@/components/Molecules/NavLink';
 import Header from '@/components/Organisms/Header';
 
@@ -16,7 +17,7 @@ const NavContainer = styled.div`
 
 const Milestones = () => {
   const LoginUserInfoStateValue = useRecoilValue(LoginUserInfoState);
-  const [isOpenAddEdit, setIsOpenAddEdit] = useState(true);
+  const [isOpenAddEdit, setIsOpenAddEdit] = useState(false);
 
   const openAddEdit = () => {
     setIsOpenAddEdit((state) => !state);
@@ -29,6 +30,7 @@ const Milestones = () => {
         <NavLink navData={NAV_DATA} navLinkStyle="LINE" />
         <Button {...(isOpenAddEdit ? BUTTON_PROPS.ADD : BUTTON_PROPS.CLOSE)} handleOnClick={openAddEdit} />
       </NavContainer>
+      {!isOpenAddEdit && <EditMileStone editMode="ADD" />}
     </div>
   );
 };
