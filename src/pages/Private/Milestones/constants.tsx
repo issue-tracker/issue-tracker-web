@@ -2,7 +2,7 @@ import Icon from '@/components/Atoms/Icon';
 import { ButtonTypes } from '@/components/Atoms/Button';
 import { COLORS } from '@/styles/theme';
 
-interface BUTTON_PROPS_TYPES {
+export interface BUTTON_PROPS_TYPES {
   [key: string]: ButtonTypes;
 }
 
