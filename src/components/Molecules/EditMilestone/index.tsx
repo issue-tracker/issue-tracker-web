@@ -9,8 +9,8 @@ import { EDIT_FORM_INFO } from '@/components/Molecules/EditMilestone/constants';
 
 export interface MilestonesFormTypes {
   title: string;
-  description: string;
-  dueDate: string;
+  description: string | null;
+  dueDate: string | null;
 }
 
 interface EditMilestoneType {
@@ -38,14 +38,14 @@ const EditMilestone = ({ editMode, milestoneInfo }: EditMilestoneType) => {
   };
 
   return (
-    <S.EditMilestone>
+    <S.EditMilestone editMode={editMode}>
       <h2>{editMode === 'ADD' ? '새로운 마일스톤 추가' : '마일스톤 편집'}</h2>
       <S.EditForm>
         {EDIT_FORM_INFO.map((info) => (
           <EditInput
             key={info.formKey}
             {...info}
-            value={milestoneInfo && milestoneForm[info.formKey]}
+            value={(milestoneInfo && milestoneForm[info.formKey]) || ''}
             state={milestoneForm}
             setState={setMilestoneForm}
           />
