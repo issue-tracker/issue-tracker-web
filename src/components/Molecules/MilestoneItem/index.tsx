@@ -29,8 +29,8 @@ const MilestoneItem = ({ openCount = 5, closeCount = 5, ...props }: MilestoneIte
 
   return (
     <>
-      <S.MilestonItem>
-        <S.MilestonItemInfo>
+      <S.MilestoneItem>
+        <S.MilestoneItemInfo>
           <Link to={`/milestone/${id}`} className="MilestoneItem_title">
             <Icon icon="Milestone" fill={COLORS.PRIMARY.BLUE} stroke={COLORS.PRIMARY.BLUE} />
             <span>{title}</span>
@@ -40,17 +40,16 @@ const MilestoneItem = ({ openCount = 5, closeCount = 5, ...props }: MilestoneIte
             <span>{dueDate || '완료일 없음'}</span>
           </div>
           <p className="MilestoneItem_description">{description || ' '}</p>
-        </S.MilestonItemInfo>
+        </S.MilestoneItemInfo>
         <div>
-          <S.MilestonItemButtons isOpenModifyEditer={isOpenModifyEditer}>
+          <S.MilestoneItemButtons isOpenModifyEditer={isOpenModifyEditer}>
             <Button {...MILESTONE_BUTTON_INFO.CLOSE} />
             <Button {...MILESTONE_BUTTON_INFO.MODIFY} handleOnClick={() => setIsOpenModifyEditer((state) => !state)} />
             <Button {...MILESTONE_BUTTON_INFO.DELETE} />
-          </S.MilestonItemButtons>
+          </S.MilestoneItemButtons>
           <PrograssBar open={openCount} close={closeCount} showState />
         </div>
-      </S.MilestonItem>
-      {isOpenModifyEditer && <EditMilestone editMode="MODIFY" milestoneInfo={{ title, description, dueDate }} />}
+      </S.MilestoneItem>
     </>
   );
 };
