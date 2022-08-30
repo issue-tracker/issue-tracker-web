@@ -1,12 +1,12 @@
 import styled, { css } from 'styled-components';
 import { StyledIssueItem } from '@/components/Molecules/IssueItem/index.styles';
 
-export const MilestonItem = styled(StyledIssueItem)`
+export const MilestoneItem = styled(StyledIssueItem)`
   display: flex;
   justify-content: space-between;
 `;
 
-export const MilestonItemInfo = styled.div`
+export const MilestoneItemInfo = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 8px;
@@ -39,7 +39,7 @@ export const MilestonItemInfo = styled.div`
   }
 `;
 
-export const MilestonItemButtons = styled.div<{ isOpenModifyEditer: boolean }>`
+export const MilestoneItemButtons = styled.div<{ isOpenModifyEditer: boolean }>`
   ${({ theme }) => theme.MIXIN.FLEX({ align: 'center', justify: 'flex-end' })};
   gap: 24px;
 
