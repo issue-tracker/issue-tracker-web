@@ -1,14 +1,20 @@
-import { useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { LoginUserInfoState } from '@/stores/loginUserInfo';
 
 import styled from 'styled-components';
 import Button from '@/components/Atoms/Button';
-import EditMileStone from '@/components/Molecules/EditMilestone';
+import EditMilestone from '@/components/Molecules/EditMilestone';
 import NavLink from '@/components/Molecules/NavLink';
 import Header from '@/components/Organisms/Header';
 
+import SkeletonMilestoneTable from '@/components/Skeleton/MilestoneTable';
+
 import { BUTTON_PROPS, NAV_DATA } from '@/pages/Private/Milestones/constants';
+
+import useFetchMilestone from '@/hooks/useFetchMilestone';
+
+const MilestoneTable = lazy(() => import('@/components/Organisms/MilestoneTable'));
 
 const NavContainer = styled.div`
   ${({ theme }) => theme.MIXIN.FLEX({ align: 'center', justify: 'space-between' })};
@@ -19,6 +25,8 @@ const Milestones = () => {
   const LoginUserInfoStateValue = useRecoilValue(LoginUserInfoState);
   const [isOpenAddEdit, setIsOpenAddEdit] = useState(false);
 
+  const { milestoneData } = useFetchMilestone();
+
   const openAddEdit = () => {
     setIsOpenAddEdit((state) => !state);
   };
@@ -28,9 +36,12 @@ const Milestones = () => {
       <Header user={LoginUserInfoStateValue} />
       <NavContainer>
         <NavLink navData={NAV_DATA} navLinkStyle="LINE" />
-        <Button {...(isOpenAddEdit ? BUTTON_PROPS.ADD : BUTTON_PROPS.CLOSE)} handleOnClick={openAddEdit} />
+        <Button {...(!isOpenAddEdit ? BUTTON_PROPS.ADD : BUTTON_PROPS.CLOSE)} handleOnClick={openAddEdit} />
       </NavContainer>
-      {!isOpenAddEdit && <EditMileStone editMode="ADD" />}
+      {isOpenAddEdit && <EditMilestone editMode="ADD" />}
+      <Suspense fallback={<SkeletonMilestoneTable />}>
+        <MilestoneTable milestoneData={milestoneData!} />
+      </Suspense>
     </div>
   );
 };
