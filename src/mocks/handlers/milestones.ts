@@ -1,6 +1,8 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { rest } from 'msw';
 
+const tokenErrorMessage = { message: '토큰이 유효하지 않습니다.' };
+
 const milestones = {
   openedMilestones: [
     {
@@ -36,5 +38,34 @@ export const milestoneHandlers = [
     }
 
     return res(ctx.status(400), ctx.json(false));
+  }),
+
+  rest.post('api/milestones', async (req, res, ctx) => {
+    const newMilestone = await req.json();
+    const { title, description, dueDate } = newMilestone;
+
+    if (!title) {
+      return res(ctx.status(400), ctx.json('필수 입력값을 입력해주세요'));
+    }
+
+    if (!req.cookies['refresh-token']) {
+      return res(ctx.status(400), ctx.json(tokenErrorMessage.message));
+    }
+
+    milestones.openedMilestones.push(newMilestone);
+
+    const response = {
+      id: milestones.openedMilestones.length + 1,
+      title,
+      description,
+      dueDate,
+      closed: true,
+    };
+
+    if (req.cookies['refresh-token']) {
+      return res(ctx.status(200), ctx.json(response));
+    }
+
+    return res(ctx.status(400), ctx.json(tokenErrorMessage));
   }),
 ];
