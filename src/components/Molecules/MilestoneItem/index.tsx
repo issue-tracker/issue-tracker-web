@@ -8,6 +8,7 @@ import PrograssBar from '@/components/Atoms/ProgressBar';
 import EditMilestone from '@/components/Molecules/EditMilestone';
 import { MILESTONE_BUTTON_INFO } from '@/components/Molecules/MilestoneItem/constants';
 import { COLORS } from '@/styles/theme';
+import useFetchMilestone from '@/hooks/useFetchMilestone';
 
 export interface MilestoneItemTypes {
   id: number;
@@ -24,6 +25,8 @@ interface MilestoneItemCountTypes {
 }
 
 const MilestoneItem = ({ openCount = 5, closeCount = 5, ...props }: MilestoneItemTypes & MilestoneItemCountTypes) => {
+  const { deleteMilestoneMutate } = useFetchMilestone();
+
   const { id, title, description, dueDate, closed } = props;
   const [isOpenModifyEditer, setIsOpenModifyEditer] = useState(false);
 
@@ -45,7 +48,7 @@ const MilestoneItem = ({ openCount = 5, closeCount = 5, ...props }: MilestoneIte
           <S.MilestoneItemButtons isOpenModifyEditer={isOpenModifyEditer}>
             <Button {...MILESTONE_BUTTON_INFO.CLOSE} />
             <Button {...MILESTONE_BUTTON_INFO.MODIFY} handleOnClick={() => setIsOpenModifyEditer((state) => !state)} />
-            <Button {...MILESTONE_BUTTON_INFO.DELETE} />
+            <Button {...MILESTONE_BUTTON_INFO.DELETE} handleOnClick={() => deleteMilestoneMutate(id)} />
           </S.MilestoneItemButtons>
           <PrograssBar open={openCount} close={closeCount} showState />
         </div>

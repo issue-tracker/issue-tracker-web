@@ -31,3 +31,5 @@ export const patchMilestoneData = async ({ id, milestoneData }: { id: number; mi
     throw err;
   }
 };
+
+    const { data } = await axios.delete<MilestonesFormTypes>(`api/milestones/${id}`);
