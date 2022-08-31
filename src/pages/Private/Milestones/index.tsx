@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { LoginUserInfoState } from '@/stores/loginUserInfo';
 
@@ -38,7 +38,7 @@ const Milestones = () => {
         <NavLink navData={NAV_DATA} navLinkStyle="LINE" />
         <Button {...(!isOpenAddEdit ? BUTTON_PROPS.ADD : BUTTON_PROPS.CLOSE)} handleOnClick={openAddEdit} />
       </NavContainer>
-      {isOpenAddEdit && <EditMilestone editMode="ADD" />}
+      {isOpenAddEdit && <EditMilestone editMode="ADD" setOpenState={setIsOpenAddEdit} />}
       <Suspense fallback={<SkeletonMilestoneTable />}>
         <MilestoneTable milestoneData={milestoneData!} />
       </Suspense>
