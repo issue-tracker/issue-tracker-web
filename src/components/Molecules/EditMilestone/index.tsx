@@ -1,11 +1,12 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import * as S from '@/components/Molecules/EditMilestone/index.styles';
 import Button from '@/components/Atoms/Button';
 import EditInput from '@/components/Molecules/EditMilestone/EditInput';
-
-import { BUTTON_PROPS } from '@/pages/Private/Milestones/constants';
 import { EDIT_FORM_INFO } from '@/components/Molecules/EditMilestone/constants';
+import { BUTTON_PROPS } from '@/pages/Private/Milestones/constants';
+
+import useFetchMilestone from '@/hooks/useFetchMilestone';
 
 export interface MilestonesFormTypes {
   title: string;
@@ -14,8 +15,10 @@ export interface MilestonesFormTypes {
 }
 
 interface EditMilestoneType {
+  id?: number;
   editMode: 'ADD' | 'MODIFY';
   milestoneInfo?: MilestonesFormTypes;
+  setOpenState: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const INIT_FORM_STATE = {
@@ -24,7 +27,8 @@ const INIT_FORM_STATE = {
   dueDate: '',
 };
 
-const EditMilestone = ({ editMode, milestoneInfo }: EditMilestoneType) => {
+const EditMilestone = ({ id, editMode, milestoneInfo, setOpenState }: EditMilestoneType) => {
+  const { createMilestoneMutate } = useFetchMilestone();
   const [milestoneForm, setMilestoneForm] = useState<MilestonesFormTypes>(milestoneInfo || INIT_FORM_STATE);
 
   const isDisabled = () => {
@@ -34,6 +38,13 @@ const EditMilestone = ({ editMode, milestoneInfo }: EditMilestoneType) => {
 
     if (editMode === 'MODIFY') {
       return JSON.stringify(milestoneForm) === JSON.stringify(milestoneInfo) || milestoneForm.title === '';
+    }
+  };
+
+  const onClickSaveButton = () => {
+    if (editMode === 'ADD') {
+      createMilestoneMutate(milestoneForm);
+      setOpenState((open) => !open);
     }
   };
 
@@ -55,7 +66,7 @@ const EditMilestone = ({ editMode, milestoneInfo }: EditMilestoneType) => {
         {editMode === 'MODIFY' && (
           <Button {...BUTTON_PROPS.CANCEL} handleOnClick={() => setMilestoneForm(milestoneInfo!)} />
         )}
-        <Button {...BUTTON_PROPS.SAVE} disabled={isDisabled()} />
+        <Button {...BUTTON_PROPS.SAVE} disabled={isDisabled()} handleOnClick={onClickSaveButton} />
       </S.EditButtons>
     </S.EditMilestone>
   );
