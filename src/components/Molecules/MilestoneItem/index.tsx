@@ -9,7 +9,7 @@ import EditMilestone from '@/components/Molecules/EditMilestone';
 import { MILESTONE_BUTTON_INFO } from '@/components/Molecules/MilestoneItem/constants';
 import { COLORS } from '@/styles/theme';
 
-interface MilestoneItemTypes {
+export interface MilestoneItemTypes {
   id: number;
   title: string;
   description: string | null;
@@ -50,6 +50,14 @@ const MilestoneItem = ({ openCount = 5, closeCount = 5, ...props }: MilestoneIte
           <PrograssBar open={openCount} close={closeCount} showState />
         </div>
       </S.MilestoneItem>
+      {isOpenModifyEditer && (
+        <EditMilestone
+          editMode="MODIFY"
+          id={id}
+          milestoneInfo={{ title, description, dueDate }}
+          setOpenState={setIsOpenModifyEditer}
+        />
+      )}
     </>
   );
 };

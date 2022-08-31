@@ -21,3 +21,13 @@ export const createNewMilestone = async (milestoneData: MilestonesFormTypes) => 
     throw err;
   }
 };
+
+export const patchMilestoneData = async ({ id, milestoneData }: { id: number; milestoneData: MilestonesFormTypes }) => {
+  try {
+    const { data } = await axios.patch<MilestonesFormTypes>(`api/milestones/${id}`, milestoneData);
+    return data;
+  } catch (error) {
+    const err = error as AxiosError;
+    throw err;
+  }
+};
