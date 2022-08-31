@@ -93,4 +93,25 @@ export const milestoneHandlers = [
 
     return res(ctx.status(400), ctx.json(false));
   }),
+
+  rest.delete('api/milestones/:id', async (req, res, ctx) => {
+    const { id } = req.params;
+
+    const deleteMilestones = Object.values(milestones).map((state: MilestoneItemTypes[]) => {
+      if (state.find((el) => el.id === Number(id))) {
+        return state.filter((el) => el.id !== Number(id));
+      }
+      return state;
+    });
+
+    const [newOpenedMilestones, newClosedMilestones] = deleteMilestones;
+    milestones.openedMilestones = newOpenedMilestones;
+    milestones.closedMilestones = newClosedMilestones;
+
+    if (req.cookies['refresh-token']) {
+      return res(ctx.status(200), ctx.json({ message: '성공적으로 삭제되었습니다.' }));
+    }
+
+    return res(ctx.status(400), ctx.json(tokenErrorMessage));
+  }),
 ];
