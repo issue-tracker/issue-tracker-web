@@ -27,8 +27,8 @@ const INIT_FORM_STATE = {
   dueDate: '',
 };
 
-const EditMilestone = ({ id, editMode, milestoneInfo, setOpenState }: EditMilestoneType) => {
-  const { createMilestoneMutate } = useFetchMilestone();
+const EditMilestone = ({ editMode, milestoneInfo, id, setOpenState }: EditMilestoneType) => {
+  const { createMilestoneMutate, patchMilestoneDataMutate } = useFetchMilestone();
   const [milestoneForm, setMilestoneForm] = useState<MilestonesFormTypes>(milestoneInfo || INIT_FORM_STATE);
 
   const isDisabled = () => {
@@ -46,6 +46,16 @@ const EditMilestone = ({ id, editMode, milestoneInfo, setOpenState }: EditMilest
       createMilestoneMutate(milestoneForm);
       setOpenState((open) => !open);
     }
+
+    if (editMode === 'MODIFY') {
+      patchMilestoneDataMutate({ milestoneData: milestoneForm, id: id! });
+      setOpenState((open) => !open);
+    }
+  };
+
+  const onClickCancelButton = () => {
+    setMilestoneForm(milestoneInfo!);
+    setOpenState((open) => !open);
   };
 
   return (
@@ -63,9 +73,7 @@ const EditMilestone = ({ id, editMode, milestoneInfo, setOpenState }: EditMilest
         ))}
       </S.EditForm>
       <S.EditButtons>
-        {editMode === 'MODIFY' && (
-          <Button {...BUTTON_PROPS.CANCEL} handleOnClick={() => setMilestoneForm(milestoneInfo!)} />
-        )}
+        {editMode === 'MODIFY' && <Button {...BUTTON_PROPS.CANCEL} handleOnClick={onClickCancelButton} />}
         <Button {...BUTTON_PROPS.SAVE} disabled={isDisabled()} handleOnClick={onClickSaveButton} />
       </S.EditButtons>
     </S.EditMilestone>

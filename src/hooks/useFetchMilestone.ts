@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getMilestoneData, createNewMilestone } from '@/api/milestone';
+import { getMilestoneData, createNewMilestone, patchMilestoneData } from '@/api/milestone';
 import { MilestoneListTypes } from '@/components/Organisms/MilestoneTable';
 
 const useFetchMilestone = () => {
@@ -15,9 +15,16 @@ const useFetchMilestone = () => {
     },
   });
 
+  const { mutate: patchMilestoneDataMutate } = useMutation(patchMilestoneData, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['milestones']);
+    },
+  });
+
   return {
     milestoneData,
     createMilestoneMutate,
+    patchMilestoneDataMutate,
   };
 };
 

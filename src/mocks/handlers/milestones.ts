@@ -1,9 +1,11 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { rest } from 'msw';
+import { MilestoneListTypes } from '@/components/Organisms/MilestoneTable';
+import { MilestoneItemTypes } from '@/components/Molecules/MilestoneItem';
 
 const tokenErrorMessage = { message: '토큰이 유효하지 않습니다.' };
 
-const milestones = {
+const milestones: MilestoneListTypes = {
   openedMilestones: [
     {
       id: 0,
@@ -68,10 +70,27 @@ export const milestoneHandlers = [
 
     return res(ctx.status(400), ctx.json(tokenErrorMessage));
   }),
+
+  rest.patch('api/milestones/:id', async (req, res, ctx) => {
+    const { id } = req.params;
+    const patchMilestone = await req.json();
+
+    const patchMilestones = Object.values(milestones).map((state: MilestoneItemTypes[]) => {
+      if (state.find((el) => el.id === Number(id))) {
+        const updateMilestones = state.map((el) => (el.id === Number(id) ? { ...el, ...patchMilestone } : el));
+        return updateMilestones;
+      }
+      return state;
+    });
+
+    const [newOpenedMilestones, newClosedMilestones] = patchMilestones;
+    milestones.openedMilestones = newOpenedMilestones;
+    milestones.closedMilestones = newClosedMilestones;
+
     if (req.cookies['refresh-token']) {
-      return res(ctx.status(200), ctx.json(response));
+      return res(ctx.status(200), ctx.json(patchMilestones));
     }
 
-    return res(ctx.status(400), ctx.json(tokenErrorMessage));
+    return res(ctx.status(400), ctx.json(false));
   }),
 ];
