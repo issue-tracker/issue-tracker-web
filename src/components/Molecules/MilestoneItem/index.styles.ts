@@ -6,6 +6,18 @@ export const MilestoneItem = styled(StyledIssueItem)`
   justify-content: space-between;
 `;
 
+export const CommonMilestoneItem = styled.div`
+  ${({ theme }) => theme.MIXIN.FLEX({ align: 'center', justify: 'center' })};
+  background: ${({ theme }) => theme.COLORS.OFF_WHITE};
+  padding: 24px 32px;
+
+  span {
+    ${({ theme }) => theme.FONTSTYLES.TEXT_MEDIUM};
+    color: ${({ theme }) => theme.COLORS.TITLE_ACTIVE};
+    margin-left: 8px;
+  }
+`;
+
 export const MilestoneItemInfo = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
