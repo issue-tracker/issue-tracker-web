@@ -41,8 +41,8 @@ export const milestoneHandlers = [
   }),
 
   rest.post('api/milestones', async (req, res, ctx) => {
-    const newMilestone = await req.json();
-    const { title, description, dueDate } = newMilestone;
+    const requestData = await req.json();
+    const { title, description, dueDate } = requestData;
 
     if (!title) {
       return res(ctx.status(400), ctx.json('필수 입력값을 입력해주세요'));
@@ -52,9 +52,7 @@ export const milestoneHandlers = [
       return res(ctx.status(400), ctx.json(tokenErrorMessage.message));
     }
 
-    milestones.openedMilestones.push(newMilestone);
-
-    const response = {
+    const newMilestone = {
       id: milestones.openedMilestones.length + 1,
       title,
       description,
@@ -62,6 +60,14 @@ export const milestoneHandlers = [
       closed: true,
     };
 
+    milestones.openedMilestones.push(newMilestone);
+
+    if (req.cookies['refresh-token']) {
+      return res(ctx.status(200), ctx.json(newMilestone));
+    }
+
+    return res(ctx.status(400), ctx.json(tokenErrorMessage));
+  }),
     if (req.cookies['refresh-token']) {
       return res(ctx.status(200), ctx.json(response));
     }
