@@ -25,7 +25,7 @@ interface MilestoneItemCountTypes {
 }
 
 const MilestoneItem = ({ openCount = 5, closeCount = 5, ...props }: MilestoneItemTypes & MilestoneItemCountTypes) => {
-  const { deleteMilestoneMutate } = useFetchMilestone();
+  const { patchMilestoneStateMutate, deleteMilestoneMutate } = useFetchMilestone();
 
   const { id, title, description, dueDate, closed } = props;
   const [isOpenModifyEditer, setIsOpenModifyEditer] = useState(false);
@@ -46,7 +46,10 @@ const MilestoneItem = ({ openCount = 5, closeCount = 5, ...props }: MilestoneIte
         </S.MilestoneItemInfo>
         <div>
           <S.MilestoneItemButtons isOpenModifyEditer={isOpenModifyEditer}>
-            <Button {...MILESTONE_BUTTON_INFO.CLOSE} />
+            <Button
+              {...(closed ? MILESTONE_BUTTON_INFO.OPEN : MILESTONE_BUTTON_INFO.CLOSE)}
+              handleOnClick={() => patchMilestoneStateMutate(id)}
+            />
             <Button {...MILESTONE_BUTTON_INFO.MODIFY} handleOnClick={() => setIsOpenModifyEditer((state) => !state)} />
             <Button {...MILESTONE_BUTTON_INFO.DELETE} handleOnClick={() => deleteMilestoneMutate(id)} />
           </S.MilestoneItemButtons>
