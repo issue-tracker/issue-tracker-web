@@ -49,11 +49,11 @@ export const NAV_DATA = [
   {
     icon: <Icon icon="Tag" stroke="#14142B" />,
     link: '/label',
-    title: '레이블 (3)',
+    title: '레이블',
   },
   {
     icon: <Icon icon="Milestone" fill="#14142B" />,
     link: '/milestone',
-    title: '마일스톤 (2)',
+    title: '마일스톤',
   },
 ];
