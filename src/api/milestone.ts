@@ -32,4 +32,22 @@ export const patchMilestoneData = async ({ id, milestoneData }: { id: number; mi
   }
 };
 
+export const patchMilestoneState = async (id: number) => {
+  try {
+    const { data } = await axios.patch<MilestonesFormTypes>(`api/milestones/${id}/status`);
+    return data;
+  } catch (error) {
+    const err = error as AxiosError;
+    throw err;
+  }
+};
+
+export const deleteMilestone = async (id: number) => {
+  try {
     const { data } = await axios.delete<MilestonesFormTypes>(`api/milestones/${id}`);
+    return data;
+  } catch (error) {
+    const err = error as AxiosError;
+    throw err;
+  }
+};

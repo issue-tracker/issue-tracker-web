@@ -55,11 +55,11 @@ export const milestoneHandlers = [
     }
 
     const newMilestone = {
-      id: milestones.openedMilestones.length + 1,
+      id: title.charCodeAt(title.length - 1) + Math.floor(Math.random() * 10000),
       title,
       description,
       dueDate,
-      closed: true,
+      closed: false,
     };
 
     milestones.openedMilestones.push(newMilestone);
@@ -89,6 +89,38 @@ export const milestoneHandlers = [
 
     if (req.cookies['refresh-token']) {
       return res(ctx.status(200), ctx.json(patchMilestones));
+    }
+
+    return res(ctx.status(400), ctx.json(false));
+  }),
+
+  rest.patch('api/milestones/:id/status', async (req, res, ctx) => {
+    const { id } = req.params;
+
+    const find = () => {
+      const result: MilestoneItemTypes[] = [];
+      Object.values(milestones).forEach((state: MilestoneItemTypes[]) => {
+        const findMilestone = state.find((el) => el.id === Number(id));
+        if (findMilestone) {
+          result.push(findMilestone);
+        }
+      });
+
+      return result[0];
+    };
+
+    const milestone = find();
+
+    if (milestone.closed) {
+      milestones.openedMilestones.push({ ...milestone, closed: false });
+      milestones.closedMilestones = milestones.closedMilestones.filter((el) => el.id !== Number(id));
+    } else {
+      milestones.closedMilestones.push({ ...milestone, closed: true });
+      milestones.openedMilestones = milestones.openedMilestones.filter((el) => el.id !== Number(id));
+    }
+
+    if (req.cookies['refresh-token']) {
+      return res(ctx.status(200), ctx.json(milestones));
     }
 
     return res(ctx.status(400), ctx.json(false));

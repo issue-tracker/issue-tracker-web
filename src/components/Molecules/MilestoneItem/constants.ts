@@ -2,6 +2,12 @@ import { BUTTON_PROPS_TYPES } from '@/pages/Private/Milestones/constants';
 import { COLORS } from '@/styles/theme';
 
 export const MILESTONE_BUTTON_INFO: BUTTON_PROPS_TYPES = {
+  OPEN: {
+    buttonStyle: 'NO_BORDER',
+    iconInfo: { icon: 'Milestone', fill: COLORS.TITLE_ACTIVE },
+    label: '열기',
+    size: 'SMALL',
+  },
   CLOSE: {
     buttonStyle: 'NO_BORDER',
     iconInfo: { icon: 'Archive' },
