@@ -1,13 +1,13 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import MilestoneTable from '@/components/Organisms/MilestoneTable';
 import { milestoneHandlers } from '@/mocks/handlers/milestones';
+import Milestones from '.';
 
 export default {
-  title: 'Organisms/MilestoneTable',
-  component: MilestoneTable,
-} as ComponentMeta<typeof MilestoneTable>;
+  title: 'Pages/Milestones',
+  component: Milestones,
+} as ComponentMeta<typeof Milestones>;
 
-const Template: ComponentStory<typeof MilestoneTable> = () => <MilestoneTable />;
+const Template: ComponentStory<typeof Milestones> = () => <Milestones />;
 
 export const Initial = Template.bind({});
 
