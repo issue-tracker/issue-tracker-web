@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { ErrorBoundary } from 'react-error-boundary';
+import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
 import {
   StyledIssueTable as StyledMilestoneTable,
@@ -10,6 +12,11 @@ import Icon from '@/components/Atoms/Icon';
 import NavLink from '@/components/Molecules/NavLink';
 import MilestoneItem, { MilestoneItemTypes } from '@/components/Molecules/MilestoneItem';
 import EmptyMilestoneItem from '@/components/Molecules/MilestoneItem/EmptyItem';
+
+import SkeletonMilestoneTable from '@/components/Skeleton/MilestoneTable';
+import ErrorMilestoneTable from '@/components/Organisms/MilestoneTable/Error';
+
+import useFetchMilestone from '@/hooks/useFetchMilestone';
 
 export interface MilestoneListTypes {
   closedMilestones: MilestoneItemTypes[];
@@ -29,7 +36,8 @@ const MILESTONE_STATE_TAB = (data: MilestoneListTypes) => [
   },
 ];
 
-const MilestoneTable = ({ milestoneData }: { milestoneData: MilestoneListTypes }) => {
+const MilestoneTable = () => {
+  const { milestoneData } = useFetchMilestone();
   const [searchParams] = useSearchParams();
   const stateParam = searchParams.get('state');
 
@@ -51,13 +59,29 @@ const MilestoneTable = ({ milestoneData }: { milestoneData: MilestoneListTypes }
   return (
     <StyledMilestoneTable>
       <StyledMilestoneHeader>
-        <NavLink navData={MILESTONE_STATE_TAB(milestoneData)} />
+        <NavLink navData={MILESTONE_STATE_TAB(milestoneData!)} />
       </StyledMilestoneHeader>
       {isOpenMilestone()
-        ? renderMilestones(milestoneData.openedMilestones)
-        : renderMilestones(milestoneData.closedMilestones)}
+        ? renderMilestones(milestoneData!.openedMilestones)
+        : renderMilestones(milestoneData!.closedMilestones)}
     </StyledMilestoneTable>
   );
 };
+
+export const FallBackMilestoneTable = () => (
+  <QueryErrorResetBoundary>
+    {({ reset }) => (
+      <ErrorBoundary
+        onReset={reset}
+        // eslint-disable-next-line react/no-unstable-nested-components
+        fallbackRender={({ resetErrorBoundary }) => <ErrorMilestoneTable resetErrorBoundary={resetErrorBoundary} />}
+      >
+        <Suspense fallback={<SkeletonMilestoneTable />}>
+          <MilestoneTable />
+        </Suspense>
+      </ErrorBoundary>
+    )}
+  </QueryErrorResetBoundary>
+);
 
 export default MilestoneTable;
