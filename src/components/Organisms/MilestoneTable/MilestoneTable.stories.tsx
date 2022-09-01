@@ -1,5 +1,6 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import MilestoneTable, { MilestoneListTypes } from '@/components/Organisms/MilestoneTable';
+import { milestoneHandlers } from '@/mocks/handlers/milestones';
 
 export default {
   title: 'Organisms/MilestoneTable',
@@ -31,4 +32,10 @@ const MILESTONE_DATA: MilestoneListTypes = {
 export const Initial = Template.bind({});
 Initial.args = {
   milestoneData: MILESTONE_DATA,
+};
+
+Initial.parameters = {
+  msw: {
+    handlers: milestoneHandlers,
+  },
 };

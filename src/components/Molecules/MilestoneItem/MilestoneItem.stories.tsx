@@ -1,5 +1,6 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import MilestoneItem from '@/components/Molecules/MilestoneItem';
+import { milestoneHandlers } from '@/mocks/handlers/milestones';
 
 export default {
   title: 'Molecules/MilestoneItem',
@@ -19,6 +20,12 @@ Initial.args = {
   closed: false,
 };
 
+Initial.parameters = {
+  msw: {
+    handlers: milestoneHandlers,
+  },
+};
+
 export const OnlyTitle = Template.bind({});
 OnlyTitle.args = {
   id: 1,
@@ -28,4 +35,10 @@ OnlyTitle.args = {
   openCount: 18,
   dueDate: null,
   closed: false,
+};
+
+OnlyTitle.parameters = {
+  msw: {
+    handlers: milestoneHandlers,
+  },
 };
