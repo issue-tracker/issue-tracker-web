@@ -4,6 +4,12 @@ import { useSearchParams } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { ClickMilestoneState } from '@/stores/milestone';
+import ModalPortal from '@/Portal';
+import Modal, { ModalState } from '@/components/Modal';
+import DeleteMilestoneModal from '@/components/Modal/DeleteMilestone';
+
 import {
   StyledIssueTable as StyledMilestoneTable,
   IssueHeader as StyledMilestoneHeader,
@@ -38,6 +44,9 @@ const MILESTONE_STATE_TAB = (data: MilestoneListTypes) => [
 
 const MilestoneTable = () => {
   const { milestoneData } = useFetchMilestone();
+  const [isOpenModalState] = useRecoilState(ModalState);
+  const clickMilestoneState = useRecoilValue(ClickMilestoneState);
+
   const [searchParams] = useSearchParams();
   const stateParam = searchParams.get('state');
 
@@ -57,14 +66,24 @@ const MilestoneTable = () => {
   useEffect(() => {}, [searchParams]);
 
   return (
-    <StyledMilestoneTable>
-      <StyledMilestoneHeader>
-        <NavLink navData={MILESTONE_STATE_TAB(milestoneData!)} />
-      </StyledMilestoneHeader>
-      {isOpenMilestone()
-        ? renderMilestones(milestoneData!.openedMilestones)
-        : renderMilestones(milestoneData!.closedMilestones)}
-    </StyledMilestoneTable>
+    <>
+      <StyledMilestoneTable>
+        <StyledMilestoneHeader>
+          <NavLink navData={MILESTONE_STATE_TAB(milestoneData!)} />
+        </StyledMilestoneHeader>
+        {isOpenMilestone()
+          ? renderMilestones(milestoneData!.openedMilestones)
+          : renderMilestones(milestoneData!.closedMilestones)}
+      </StyledMilestoneTable>
+      {isOpenModalState && (
+        <ModalPortal>
+          <Modal>
+            <DeleteMilestoneModal id={clickMilestoneState.id} />
+          </Modal>
+          )
+        </ModalPortal>
+      )}
+    </>
   );
 };
 
