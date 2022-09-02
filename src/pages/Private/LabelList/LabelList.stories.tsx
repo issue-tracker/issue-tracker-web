@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { labelHandlers } from '@/mocks/handler/label';
+import { labelHandlers } from '@/mocks/handlers/label';
 import LabelList from '@/pages/Private/LabelList';
 
 export default {
