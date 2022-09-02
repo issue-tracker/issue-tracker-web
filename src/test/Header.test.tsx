@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 
 import { composeStories } from '@storybook/testing-react';
 import * as SampleHeader from '@/components/Organisms/Header/Header.stories';
-import { render } from '@/test/util';
+import { render } from '@/test/utils';
 
 const { Initial } = composeStories(SampleHeader);
 

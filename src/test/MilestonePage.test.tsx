@@ -10,12 +10,6 @@ import * as MilestonesPageStories from '@/pages/Private/Milestones/MilestonesPag
 const { Initial } = composeStories(MilestonesPageStories);
 
 describe('마일스톤 페이지 테스트', () => {
-  beforeEach(() => {
-    Object.defineProperty(document, 'cookie', {
-      writable: true,
-      value: 'refresh-token',
-    });
-  });
   afterEach(() => {
     jest.useRealTimers();
   });
@@ -23,7 +17,6 @@ describe('마일스톤 페이지 테스트', () => {
   const user = userEvent.setup({ delay: null });
 
   it('마일스톤 페이지를 조회한다.', async () => {
-    console.log(document.cookie);
     const { container } = render(<Initial />);
     await waitFor(() => expect(container).toHaveTextContent('열린 마일스톤'));
     await waitFor(() => expect(container).toHaveTextContent('닫힌 마일스톤'));
