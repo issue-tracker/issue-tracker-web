@@ -1,5 +1,3 @@
-import { Suspense } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import useLabelFetch from '@/hooks/useLabelFetch';
 
@@ -10,29 +8,11 @@ import Button from '@/components/Atoms/Button';
 import AddLabelField from '@/components/Molecules/AddLabelField';
 import NavLink from '@/components/Molecules/NavLink';
 import Header from '@/components/Organisms/Header';
-import LabelTable from '@/components/Organisms/LabelTable';
-import LabelTableSkeleton from '@/components/Skeleton/LabelTable';
+import { FallbackLabelTable } from '@/components/Organisms/LabelTable';
 
 import { LoginUserInfoState } from '@/stores/loginUserInfo';
 import { LabelState } from '@/stores/labelList';
 import { labelMilestone } from '@/components/Molecules/NavLink/option';
-import { useQueryErrorResetBoundary } from '@tanstack/react-query';
-
-const LabelTableFallback = ({ error, resetErrorBoundary }: any) => (
-  <div>
-    <p> 에러: {error.message}</p>
-    <Button
-      buttonStyle="SECONDARY"
-      iconInfo={{
-        icon: 'RefreshCcw',
-        stroke: COLORS.LABEL,
-      }}
-      label="다시 시도"
-      size="SMALL"
-      handleOnClick={() => resetErrorBoundary()}
-    />
-  </div>
-);
 
 const LabelList = () => {
   const { addLabel } = useLabelFetch();
@@ -55,8 +35,6 @@ const LabelList = () => {
     addLabel(labelState.label);
     resetLabelState();
   };
-
-  const { reset } = useQueryErrorResetBoundary();
 
   return (
     <S.LabelList>
@@ -89,11 +67,7 @@ const LabelList = () => {
         )}
       </S.SubNav>
       {labelState.type === 'ADD' && <AddLabelField type="ADD" onClickCompleteButton={handleCompleteButtonClick} />}
-      <ErrorBoundary onReset={reset} FallbackComponent={LabelTableFallback}>
-        <Suspense fallback={<LabelTableSkeleton />}>
-          <LabelTable />
-        </Suspense>
-      </ErrorBoundary>
+      <FallbackLabelTable />
     </S.LabelList>
   );
 };
