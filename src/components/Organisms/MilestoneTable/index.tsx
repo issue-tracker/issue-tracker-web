@@ -10,17 +10,14 @@ import ModalPortal from '@/Portal';
 import Modal, { ModalState } from '@/components/Modal';
 import DeleteMilestoneModal from '@/components/Modal/DeleteMilestone';
 
-import {
-  StyledIssueTable as StyledMilestoneTable,
-  IssueHeader as StyledMilestoneHeader,
-} from '@/components/Organisms/IssueTable/index.styles';
 import Icon from '@/components/Atoms/Icon';
 import NavLink from '@/components/Molecules/NavLink';
+import Table from '@/components/Molecules/Table';
 import MilestoneItem, { MilestoneItemTypes } from '@/components/Molecules/MilestoneItem';
 import EmptyMilestoneItem from '@/components/Molecules/MilestoneItem/EmptyItem';
 
 import SkeletonMilestoneTable from '@/components/Skeleton/MilestoneTable';
-import ErrorMilestoneTable from '@/components/Organisms/MilestoneTable/Error';
+import ErrorTable from '@/components/Organisms/MilestoneTable/Error';
 
 import useFetchMilestone from '@/hooks/useFetchMilestone';
 
@@ -67,20 +64,19 @@ const MilestoneTable = () => {
 
   return (
     <>
-      <StyledMilestoneTable>
-        <StyledMilestoneHeader>
-          <NavLink navData={MILESTONE_STATE_TAB(milestoneData!)} />
-        </StyledMilestoneHeader>
-        {isOpenMilestone()
-          ? renderMilestones(milestoneData!.openedMilestones)
-          : renderMilestones(milestoneData!.closedMilestones)}
-      </StyledMilestoneTable>
+      <Table
+        header={<NavLink navData={MILESTONE_STATE_TAB(milestoneData!)} />}
+        item={
+          isOpenMilestone()
+            ? renderMilestones(milestoneData!.openedMilestones)
+            : renderMilestones(milestoneData!.closedMilestones)
+        }
+      />
       {isOpenModalState && (
         <ModalPortal>
           <Modal>
             <DeleteMilestoneModal id={clickMilestoneState.id} />
           </Modal>
-          )
         </ModalPortal>
       )}
     </>
@@ -93,7 +89,9 @@ export const FallBackMilestoneTable = () => (
       <ErrorBoundary
         onReset={reset}
         // eslint-disable-next-line react/no-unstable-nested-components
-        fallbackRender={({ resetErrorBoundary }) => <ErrorMilestoneTable resetErrorBoundary={resetErrorBoundary} />}
+        fallbackRender={({ resetErrorBoundary }) => (
+          <ErrorTable type="milestone" resetErrorBoundary={resetErrorBoundary} />
+        )}
       >
         <Suspense fallback={<SkeletonMilestoneTable />}>
           <MilestoneTable />

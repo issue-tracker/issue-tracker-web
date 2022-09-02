@@ -1,10 +1,10 @@
 import * as S from '@/components/Organisms/MilestoneTable/Error/index.styles';
 import Button from '@/components/Atoms/Button';
-import { StyledIssueTable as StyledErrorMilestoneTable } from '@/components/Organisms/IssueTable/index.styles';
+import { Table as StyledErrorTable } from '@/components/Molecules/Table/index.styled';
 import { COLORS } from '@/styles/theme';
 
-const ErrorMilestoneItem = ({ handleOnClick }: { handleOnClick: () => void }) => (
-  <S.ErrordMilestoneItem>
+const ErrorItem = ({ handleOnClick }: { handleOnClick: () => void }) => (
+  <S.ErrorItem>
     <span>앗! 데이터를 불러오는데 실패했어요...</span>
     <Button
       buttonStyle="STANDARD"
@@ -16,17 +16,34 @@ const ErrorMilestoneItem = ({ handleOnClick }: { handleOnClick: () => void }) =>
       size="SMALL"
       handleOnClick={handleOnClick}
     />
-  </S.ErrordMilestoneItem>
+  </S.ErrorItem>
 );
 
-const ErrorMilestoneTable = ({ resetErrorBoundary }: { resetErrorBoundary: (...args: Array<unknown>) => void }) => (
-  <StyledErrorMilestoneTable>
-    <S.ErrorMilestoneHeader>
-      <div>열린 마일스톤 (x)</div>
-      <div>닫힌 마일스톤 (x)</div>
-    </S.ErrorMilestoneHeader>
-    <ErrorMilestoneItem handleOnClick={resetErrorBoundary} />
-  </StyledErrorMilestoneTable>
+const ErrorTable = ({
+  type,
+  resetErrorBoundary,
+}: {
+  type: 'milestone' | 'label' | 'issue';
+  resetErrorBoundary: (...args: Array<unknown>) => void;
+}) => (
+  <StyledErrorTable>
+    <S.ErrorHeader>
+      {type === 'milestone' && (
+        <S.TableTab>
+          <div>열린 마일스톤 (x)</div>
+          <div>닫힌 마일스톤 (x)</div>
+        </S.TableTab>
+      )}
+      {type === 'label' && <div>레이블 (x)</div>}
+      {type === 'issue' && (
+        <S.TableTab>
+          <div>열린 이슈 (x)</div>
+          <div>닫힌 이슈 (x)</div>
+        </S.TableTab>
+      )}
+    </S.ErrorHeader>
+    <ErrorItem handleOnClick={resetErrorBoundary} />
+  </StyledErrorTable>
 );
 
-export default ErrorMilestoneTable;
+export default ErrorTable;

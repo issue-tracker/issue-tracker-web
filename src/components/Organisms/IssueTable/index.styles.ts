@@ -11,3 +11,9 @@ export const IssueInfoTabs = styled.div`
     margin-left: 32px;
   }
 `;
+
+export const IssueTableHeader = styled.div`
+  display: grid;
+  align-items: center;
+  grid-template-columns: 60px 500px auto;
+`;

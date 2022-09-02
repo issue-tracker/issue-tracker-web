@@ -64,7 +64,5 @@ export const SkeletonMilestoneItemStates = styled.div`
   }
 `;
 
-export {
-  StyledIssueTable as MilestoneTable,
-  IssueHeader as MilestoneHeader,
-} from '@/components/Organisms/IssueTable/index.styles';
+export { Table as MilestoneTable } from '@/components/Molecules/Table/index.styled';
+export { Header as MilestoneHeader } from '@/components/Molecules/Table/TableHeader';

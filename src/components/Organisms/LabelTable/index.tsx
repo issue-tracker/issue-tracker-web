@@ -1,4 +1,7 @@
+import { Suspense } from 'react';
 import { useRecoilState, useResetRecoilState } from 'recoil';
+import { ErrorBoundary } from 'react-error-boundary';
+import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 import { COLORS } from '@/styles/theme';
@@ -16,8 +19,8 @@ import useLabelFetch from '@/hooks/useLabelFetch';
 import Modal, { ModalState } from '@/components/Modal';
 import ModalPortal from '@/Portal';
 import DeleteCheck from '@/components/Modal/DeleteCheck';
-
-const [HEADER_COLUMNS, ITEM_COLUMNS] = ['120px', '240px auto 240px'];
+import ErrorTable from '@/components/Organisms/MilestoneTable/Error';
+import LabelTableSkeleton from '@/components/Skeleton/LabelTable';
 
 const LabelTable = () => {
   const { getLabel, replaceLabel } = useLabelFetch();
@@ -58,7 +61,6 @@ const LabelTable = () => {
     <S.LabelTable>
       <Table
         header={<span>{`${labelNum}개의 레이블`}</span>}
-        headerTemplateColumns={HEADER_COLUMNS}
         item={labelContents!.map(({ id, title, backgroundColorCode, description, textColor }) => (
           <TableItem key={id}>
             {labelState.type === 'EDIT' && labelState.label.id === id ? (
@@ -68,7 +70,7 @@ const LabelTable = () => {
                 onClickCompleteButton={() => handleCompleteButtonClick(id)}
               />
             ) : (
-              <S.LabelItem templateColumns={ITEM_COLUMNS}>
+              <S.LabelItem>
                 <Label
                   title={title}
                   backgroundColor={backgroundColorCode}
@@ -116,4 +118,20 @@ const LabelTable = () => {
   );
 };
 
-export default LabelTable;
+export const FallbackLabelTable = () => (
+  <QueryErrorResetBoundary>
+    {({ reset }) => (
+      <ErrorBoundary
+        onReset={reset}
+        // eslint-disable-next-line react/no-unstable-nested-components
+        fallbackRender={({ resetErrorBoundary }) => <ErrorTable type="label" resetErrorBoundary={resetErrorBoundary} />}
+      >
+        <Suspense fallback={<LabelTableSkeleton />}>
+          <LabelTable />
+        </Suspense>
+      </ErrorBoundary>
+    )}
+  </QueryErrorResetBoundary>
+);
+
+export default FallbackLabelTable;

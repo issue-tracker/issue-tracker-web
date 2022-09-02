@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import { CommonMilestoneItem } from '@/components/Molecules/MilestoneItem/index.styles';
-import { IssueHeader } from '@/components/Organisms/IssueTable/index.styles';
+import { Header } from '@/components/Molecules/Table/TableHeader';
 
-export const ErrorMilestoneHeader = styled(IssueHeader)`
+export const ErrorHeader = styled(Header)`
   gap: 20px;
 `;
 
-export const ErrordMilestoneItem = styled(CommonMilestoneItem)`
+export const ErrorItem = styled(CommonMilestoneItem)`
   button {
     margin-left: 12px;
     border-radius: 8px;
@@ -23,5 +23,12 @@ export const ErrordMilestoneItem = styled(CommonMilestoneItem)`
         stroke: ${({ theme }) => theme.COLORS.PRIMARY.BLUE};
       }
     }
+  }
+`;
+
+export const TableTab = styled.div`
+  display: flex;
+  div + div {
+    margin-left: 24px;
   }
 `;

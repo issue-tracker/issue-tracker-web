@@ -10,6 +10,9 @@ export default {
 const Template: ComponentStory<typeof ErrorMilestoneTable> = (args) => <ErrorMilestoneTable {...args} />;
 
 export const Initial = Template.bind({});
+Initial.args = {
+  type: 'milestone',
+};
 
 Initial.parameters = {
   msw: {
