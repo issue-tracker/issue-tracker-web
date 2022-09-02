@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { AddLabelField } from '@/components/Molecules/AddLabelField/index.styled';
 import { LabelTable } from '@/components/Skeleton/LabelTable/index.styled';
+import { StyledNavLink } from '@/components/Molecules/NavLink/index.styles';
 
 export const LabelList = styled.div`
   & > ${AddLabelField} {
@@ -14,11 +15,16 @@ export const LabelList = styled.div`
 `;
 
 export const SubNav = styled.div`
-  display: flex;
-  justify-content: space-between;
+  ${({ theme }) => theme.MIXIN.FLEX({ align: 'center', justify: 'space-between' })};
   margin-bottom: 24px;
 
   div {
     overflow: hidden;
+  }
+
+  ${StyledNavLink} {
+    &.active {
+      background: ${({ theme }) => theme.COLORS.LINE};
+    }
   }
 `;
