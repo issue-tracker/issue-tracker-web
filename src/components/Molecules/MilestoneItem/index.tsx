@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
+import { ModalState } from '@/components/Modal';
 
 import * as S from '@/components/Molecules/MilestoneItem/index.styles';
 import Button from '@/components/Atoms/Button';
@@ -9,6 +11,7 @@ import EditMilestone from '@/components/Molecules/EditMilestone';
 import { MILESTONE_BUTTON_INFO } from '@/components/Molecules/MilestoneItem/constants';
 import { COLORS } from '@/styles/theme';
 import useFetchMilestone from '@/hooks/useFetchMilestone';
+import { ClickMilestoneState } from '@/stores/milestone';
 
 export interface MilestoneItemTypes {
   id: number;
@@ -25,10 +28,12 @@ interface MilestoneItemCountTypes {
 }
 
 const MilestoneItem = ({ openCount = 5, closeCount = 5, ...props }: MilestoneItemTypes & MilestoneItemCountTypes) => {
-  const { patchMilestoneStateMutate, deleteMilestoneMutate } = useFetchMilestone();
+  const { patchMilestoneStateMutate } = useFetchMilestone();
 
   const { id, title, description, dueDate, closed } = props;
   const [isOpenModifyEditer, setIsOpenModifyEditer] = useState(false);
+  const setIsOpenModalState = useSetRecoilState(ModalState);
+  const setClickMilestoneState = useSetRecoilState(ClickMilestoneState);
 
   return (
     <>
@@ -51,7 +56,13 @@ const MilestoneItem = ({ openCount = 5, closeCount = 5, ...props }: MilestoneIte
               handleOnClick={() => patchMilestoneStateMutate(id)}
             />
             <Button {...MILESTONE_BUTTON_INFO.MODIFY} handleOnClick={() => setIsOpenModifyEditer((state) => !state)} />
-            <Button {...MILESTONE_BUTTON_INFO.DELETE} handleOnClick={() => deleteMilestoneMutate(id)} />
+            <Button
+              {...MILESTONE_BUTTON_INFO.DELETE}
+              handleOnClick={() => {
+                setClickMilestoneState(props);
+                setIsOpenModalState((state) => !state);
+              }}
+            />
           </S.MilestoneItemButtons>
           <PrograssBar open={openCount} close={closeCount} showState />
         </div>
