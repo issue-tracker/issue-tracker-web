@@ -34,13 +34,13 @@ const milestones: MilestoneListTypes = {
 };
 
 export const milestoneHandlers = [
-  rest.get('api/milestones', (req, res, ctx) => {
-    if (req.cookies['refresh-token']) {
-      return res(ctx.status(200), ctx.json(milestones));
-    }
+  rest.get('api/milestones', (req, res, ctx) =>
+    // if (!req.cookies['refresh-token']) {
+    //   return res(ctx.status(400), ctx.json(false));
+    // }
 
-    return res(ctx.status(400), ctx.json(false));
-  }),
+    res(ctx.status(200), ctx.json(milestones)),
+  ),
 
   rest.post('api/milestones', async (req, res, ctx) => {
     const requestData = await req.json();
@@ -50,9 +50,9 @@ export const milestoneHandlers = [
       return res(ctx.status(400), ctx.json('필수 입력값을 입력해주세요'));
     }
 
-    if (!req.cookies['refresh-token']) {
-      return res(ctx.status(400), ctx.json(tokenErrorMessage.message));
-    }
+    // if (!req.cookies['refresh-token']) {
+    //   return res(ctx.status(400), ctx.json(tokenErrorMessage.message));
+    // }
 
     const newMilestone = {
       id: title.charCodeAt(title.length - 1) + Math.floor(Math.random() * 10000),
@@ -64,11 +64,7 @@ export const milestoneHandlers = [
 
     milestones.openedMilestones.push(newMilestone);
 
-    if (req.cookies['refresh-token']) {
-      return res(ctx.status(200), ctx.json(newMilestone));
-    }
-
-    return res(ctx.status(400), ctx.json(tokenErrorMessage));
+    return res(ctx.status(200), ctx.json(newMilestone));
   }),
 
   rest.patch('api/milestones/:id', async (req, res, ctx) => {
@@ -87,11 +83,11 @@ export const milestoneHandlers = [
     milestones.openedMilestones = newOpenedMilestones;
     milestones.closedMilestones = newClosedMilestones;
 
-    if (req.cookies['refresh-token']) {
-      return res(ctx.status(200), ctx.json(patchMilestones));
-    }
+    // if (!req.cookies['refresh-token']) {
+    //   return res(ctx.status(400), ctx.json(tokenErrorMessage.message));
+    // }
 
-    return res(ctx.status(400), ctx.json(false));
+    return res(ctx.status(200), ctx.json(patchMilestones));
   }),
 
   rest.patch('api/milestones/:id/status', async (req, res, ctx) => {
@@ -119,11 +115,11 @@ export const milestoneHandlers = [
       milestones.openedMilestones = milestones.openedMilestones.filter((el) => el.id !== Number(id));
     }
 
-    if (req.cookies['refresh-token']) {
-      return res(ctx.status(200), ctx.json(milestones));
-    }
+    // if (!req.cookies['refresh-token']) {
+    //   return res(ctx.status(400), ctx.json(tokenErrorMessage.message));
+    // }
 
-    return res(ctx.status(400), ctx.json(false));
+    return res(ctx.status(200), ctx.json(milestones));
   }),
 
   rest.delete('api/milestones/:id', async (req, res, ctx) => {
@@ -140,10 +136,11 @@ export const milestoneHandlers = [
     milestones.openedMilestones = newOpenedMilestones;
     milestones.closedMilestones = newClosedMilestones;
 
-    if (req.cookies['refresh-token']) {
-      return res(ctx.status(200), ctx.json({ message: '성공적으로 삭제되었습니다.' }));
-    }
+    // if (!req.cookies['refresh-token']) {
+    //   console.log(!req.cookies['refresh-token']);
+    //   return res(ctx.status(400), ctx.json(tokenErrorMessage.message));
+    // }
 
-    return res(ctx.status(400), ctx.json(tokenErrorMessage));
+    return res(ctx.status(200), ctx.json({ message: '성공적으로 삭제되었습니다.' }));
   }),
 ];
