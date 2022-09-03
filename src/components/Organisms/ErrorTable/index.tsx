@@ -1,4 +1,4 @@
-import * as S from '@/components/Organisms/MilestoneTable/Error/index.styles';
+import * as S from '@/components/Organisms/ErrorTable/index.styles';
 import Button from '@/components/Atoms/Button';
 import { Table as StyledErrorTable } from '@/components/Molecules/Table/index.styled';
 import { COLORS } from '@/styles/theme';
