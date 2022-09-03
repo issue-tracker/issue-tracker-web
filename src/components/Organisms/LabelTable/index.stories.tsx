@@ -1,6 +1,6 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import LabelTable from '@/components/Organisms/LabelTable';
-import { labelHandlers } from '@/mocks/handler/label';
+import { labelHandlers } from '@/mocks/handlers/label';
 
 export default {
   title: 'Organisms/LabelTable',

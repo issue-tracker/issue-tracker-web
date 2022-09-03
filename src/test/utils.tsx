@@ -1,11 +1,11 @@
 /* eslint-disable import/no-extraneous-dependencies */
+import { render } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import THEME from '@/styles/theme';
 
-import { render } from '@testing-library/react';
 import { server } from '@/mocks/server';
 
 const queryClient = new QueryClient({
@@ -25,9 +25,7 @@ const AllTheProviders = ({ children }: { children: JSX.Element }) => {
     <RecoilRoot>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={THEME}>
-          <MemoryRouter initialEntries={['/']}>
-            <div id="root">{children}</div>
-          </MemoryRouter>
+          <MemoryRouter initialEntries={['/']}>{children}</MemoryRouter>
         </ThemeProvider>
       </QueryClientProvider>
     </RecoilRoot>

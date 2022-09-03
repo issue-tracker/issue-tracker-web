@@ -1,6 +1,6 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Header from '@/components/Organisms/Header';
-import { authHandlers } from '@/mocks/handler/auth';
+import { authHandlers } from '@/mocks/handlers/auth';
 
 export default {
   title: 'Organisms/Header',

@@ -1,7 +1,7 @@
 import { RecoilRoot } from 'recoil';
 import { MemoryRouter } from 'react-router-dom';
-import { ThemeProvider } from 'styled-components';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ThemeProvider } from 'styled-components';
 
 import theme from '../src/styles/theme';
 import GlobalStyle from '../src/styles/globalStyle';

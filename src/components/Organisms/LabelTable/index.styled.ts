@@ -8,9 +8,9 @@ export const LabelTable = styled.div`
   }
 `;
 
-export const LabelItem = styled.div<{ templateColumns: string }>`
+export const LabelItem = styled.div`
   display: grid;
-  grid-template-columns: ${({ templateColumns }) => templateColumns};
+  grid-template-columns: 240px auto 240px;
   align-items: center;
   padding: 36px 32px;
   ${Label} {

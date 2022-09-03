@@ -3,15 +3,11 @@ import styled from 'styled-components';
 
 export interface TableHeaderTypes {
   children: React.ReactNode;
-  templateColumns: string;
 }
 
-type HeaderTypes = Pick<TableHeaderTypes, 'templateColumns'>;
-
-export const Header = styled.div<HeaderTypes>`
+export const Header = styled.div`
   display: grid;
   align-items: center;
-  grid-template-columns: ${({ templateColumns }) => templateColumns};
   padding: 18px 32px;
   border-radius: 10px 10px 0 0;
   ${({ theme }) => theme.FONTSTYLES.LINK_SMALL};
@@ -29,7 +25,5 @@ export const Header = styled.div<HeaderTypes>`
   }
 `;
 
-const TableHeader = ({ children, templateColumns }: TableHeaderTypes) => (
-  <Header templateColumns={templateColumns}>{children}</Header>
-);
+const TableHeader = ({ children }: TableHeaderTypes) => <Header>{children}</Header>;
 export default TableHeader;

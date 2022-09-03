@@ -19,8 +19,6 @@ interface IssueTableTypes {
   filterTabs: DropdownTypes[];
 }
 
-const HEADER_COLUMNS = '60px 500px auto';
-
 const IssueTable = ({ issueListData, filterTabs }: IssueTableTypes) => {
   const [checkState, setCheckState] = useRecoilState(CheckState);
   const { checkedIssueNum } = useRecoilValue(IssueTableCheckState);
@@ -33,7 +31,7 @@ const IssueTable = ({ issueListData, filterTabs }: IssueTableTypes) => {
   return (
     <Table
       header={
-        <>
+        <S.IssueTableHeader>
           <CheckBox id={-1} type="parent" checked={checkState.parent} />
           <S.IssueStates>
             {checkedIssueNum ? (
@@ -49,9 +47,8 @@ const IssueTable = ({ issueListData, filterTabs }: IssueTableTypes) => {
               filterTabs.map((info) => <Dropdown key={info.panelTitle} {...info} />)
             )}
           </S.IssueInfoTabs>
-        </>
+        </S.IssueTableHeader>
       }
-      headerTemplateColumns={HEADER_COLUMNS}
       item={issueListData.map((props) => (
         <IssueItem key={props.id} issueInfo={props} />
       ))}

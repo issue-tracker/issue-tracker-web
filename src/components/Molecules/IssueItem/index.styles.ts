@@ -1,5 +1,19 @@
 import styled from 'styled-components';
 
+export const StyledIssueItem = styled.div`
+  ${({ theme }) => theme.MIXIN.FLEX({ align: 'center', justify: 'flex-start' })};
+  background: ${({ theme }) => theme.COLORS.OFF_WHITE};
+  padding: 24px 32px;
+
+  .checkbox {
+    margin-top: -35px;
+  }
+`;
+
+export const StyledIssue = styled.div`
+  margin-left: 32px;
+`;
+
 export const IssueTitle = styled.div`
   ${({ theme }) => theme.MIXIN.FLEX({ align: 'center', justify: 'flex-start' })};
   margin-bottom: 8px;

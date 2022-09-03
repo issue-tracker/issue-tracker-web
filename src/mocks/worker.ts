@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { setupWorker } from 'msw';
-import { authHandlers } from './handler/auth';
-import { labelHandlers } from './handler/label';
+import { milestoneHandlers } from '@/mocks/handlers/milestones';
+import { authHandlers } from '@/mocks/handlers/auth';
+import { labelHandlers } from '@/mocks/handlers/label';
 
-export const worker = setupWorker(...authHandlers, ...labelHandlers);
+export const worker = setupWorker(...authHandlers, ...labelHandlers, ...milestoneHandlers);
