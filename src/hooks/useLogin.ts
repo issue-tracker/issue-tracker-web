@@ -9,13 +9,13 @@ const useLogin = () => {
   const [loginUserInfo, setLoginUserInfo] = useRecoilState(LoginUserInfoState);
   const setIsOAuth = useSetRecoilState(OAuthState);
 
-  const onSuccessLogin = (userInfo: MemeberResponseTypes) => {
+  const saveAuthLoginState = (userInfo: MemeberResponseTypes) => {
     localStorage.setItem('Authentication', 'true');
     setLoginUserInfo(userInfo);
     setIsOAuth(true);
   };
 
-  const saveLoginUserInfo = async () => {
+  const onSuccessLogin = async () => {
     const userInfo = await getUserInfo();
     saveAuthLoginState(userInfo);
   };
@@ -32,7 +32,7 @@ const useLogin = () => {
     });
   };
 
-  return { loginUserInfo, saveLoginUserInfo, setLoginUserInfo, silentLogin, onSuccessLogin };
+  return { loginUserInfo, saveAuthLoginState, setLoginUserInfo, useSilentLogin, onSuccessLogin };
 };
 
 export default useLogin;

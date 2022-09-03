@@ -23,7 +23,7 @@ const FORM_INFO = {
 };
 
 const OAuthSignUpForm = ({ SignUpFormData }: { SignUpFormData: SignUpFormDataTypes | null }) => {
-  const { onSuccessLogin } = useLogin();
+  const { saveAuthLoginState } = useLogin();
   const navigate = useNavigate();
   const signUpFormValue = useRecoilValue(SignUpFormState);
 
@@ -50,7 +50,7 @@ const OAuthSignUpForm = ({ SignUpFormData }: { SignUpFormData: SignUpFormDataTyp
 
   const signUp = async () => {
     const { memberResponse } = (await postSignUpData({ formData, type: 'auth' })) as OAuthResponse;
-    onSuccessLogin(memberResponse);
+    saveAuthLoginState(memberResponse);
     navigate('/issues');
   };
 
