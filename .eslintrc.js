@@ -10,6 +10,7 @@ module.exports = {
     'airbnb',
     'plugin:storybook/recommended',
     'prettier',
+    'plugin:react-hooks/recommended',
   ],
   settings: {
     'import/parsers': {
@@ -29,8 +30,10 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['react', '@typescript-eslint', 'prettier'],
+  plugins: ['react', '@typescript-eslint', 'prettier', 'react-hooks'],
   rules: {
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'off',
     'react/react-in-jsx-scope': 'off',
     'prettier/prettier': ['error'],
     'consistent-return': 'off',
