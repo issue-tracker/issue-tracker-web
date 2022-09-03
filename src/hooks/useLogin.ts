@@ -12,10 +12,10 @@ const useLogin = () => {
   const saveAuthLoginState = (userInfo: MemeberResponseTypes) => {
     localStorage.setItem('Authentication', 'true');
     setLoginUserInfo(userInfo);
-    setIsOAuth(true);
   };
 
   const onSuccessLogin = async () => {
+    setIsOAuth(true);
     const userInfo = await getUserInfo();
     saveAuthLoginState(userInfo);
   };
