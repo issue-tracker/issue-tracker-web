@@ -17,9 +17,8 @@ import { LabelState, LabelTypes } from '@/stores/labelList';
 
 import useLabelFetch from '@/hooks/useLabelFetch';
 import Modal, { ModalState } from '@/components/Modal';
-import ModalPortal from '@/Portal';
 import DeleteCheck from '@/components/Modal/DeleteCheck';
-import ErrorTable from '@/components/Organisms/MilestoneTable/Error';
+import ErrorTable from '@/components/Organisms/ErrorTable';
 import LabelTableSkeleton from '@/components/Skeleton/LabelTable';
 
 const LabelTable = () => {
@@ -107,13 +106,11 @@ const LabelTable = () => {
           </TableItem>
         ))}
       />
-      <ModalPortal>
-        {isModal && (
-          <Modal>
-            <DeleteCheck id={labelState.label.id} />
-          </Modal>
-        )}
-      </ModalPortal>
+      {isModal && (
+        <Modal>
+          <DeleteCheck id={labelState.label.id} />
+        </Modal>
+      )}
     </S.LabelTable>
   );
 };

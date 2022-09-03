@@ -6,7 +6,6 @@ import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { ClickMilestoneState } from '@/stores/milestone';
-import ModalPortal from '@/Portal';
 import Modal, { ModalState } from '@/components/Modal';
 import DeleteMilestoneModal from '@/components/Modal/DeleteMilestone';
 
@@ -17,7 +16,7 @@ import MilestoneItem, { MilestoneItemTypes } from '@/components/Molecules/Milest
 import EmptyMilestoneItem from '@/components/Molecules/MilestoneItem/EmptyItem';
 
 import SkeletonMilestoneTable from '@/components/Skeleton/MilestoneTable';
-import ErrorTable from '@/components/Organisms/MilestoneTable/Error';
+import ErrorTable from '@/components/Organisms/ErrorTable';
 
 import useFetchMilestone from '@/hooks/useFetchMilestone';
 
@@ -73,11 +72,9 @@ const MilestoneTable = () => {
         }
       />
       {isOpenModalState && (
-        <ModalPortal>
-          <Modal>
-            <DeleteMilestoneModal id={clickMilestoneState.id} />
-          </Modal>
-        </ModalPortal>
+        <Modal>
+          <DeleteMilestoneModal id={clickMilestoneState.id} />
+        </Modal>
       )}
     </>
   );
