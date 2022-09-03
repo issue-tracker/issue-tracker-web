@@ -5,7 +5,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 const useLabelFetch = () => {
   const queryClient = useQueryClient();
 
-  const getLabel = () => useQuery<LabelTypes[]>(['labels'], getLabelData);
+  const useGetLabel = () => useQuery<LabelTypes[]>(['labels'], getLabelData);
 
   const { mutate: addLabel } = useMutation(addLabelData, {
     onSuccess: () => {
@@ -26,7 +26,7 @@ const useLabelFetch = () => {
   });
 
   return {
-    getLabel,
+    useGetLabel,
     addLabel,
     replaceLabel,
     deleteLabel,

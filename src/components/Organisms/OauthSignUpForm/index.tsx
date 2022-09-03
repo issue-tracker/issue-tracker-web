@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { isError, SignUpFormState } from '@/stores/signUp';
+import { useSignUpFormError, SignUpFormState } from '@/stores/signUp';
 
 import { postSignUpData, OAuthNewMemberTypes, OAuthResponse } from '@/api/signUp';
 import { SignUpFormDataTypes } from '@/api/redirectAuth';
@@ -38,7 +38,7 @@ const OAuthSignUpForm = ({ SignUpFormData }: { SignUpFormData: SignUpFormDataTyp
     inputPlaceholder: '이메일',
   };
 
-  const disabled = isError() || !signUpFormValue.nickname;
+  const disabled = useSignUpFormError() || !signUpFormValue.nickname;
 
   const formData: OAuthNewMemberTypes = {
     email,

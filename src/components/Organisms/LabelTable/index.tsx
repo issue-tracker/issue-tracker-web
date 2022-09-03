@@ -23,9 +23,9 @@ import ErrorTable from '@/components/Organisms/MilestoneTable/Error';
 import LabelTableSkeleton from '@/components/Skeleton/LabelTable';
 
 const LabelTable = () => {
-  const { getLabel, replaceLabel } = useLabelFetch();
+  const { useGetLabel, replaceLabel } = useLabelFetch();
 
-  const { data: labelContents } = getLabel();
+  const { data: labelContents } = useGetLabel();
 
   const labelNum = labelContents!.length;
 
