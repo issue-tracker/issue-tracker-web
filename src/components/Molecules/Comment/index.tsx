@@ -7,11 +7,11 @@ import { LoginUserInfoState } from '@/stores/loginUserInfo';
 import * as S from '@/components/Molecules/Comment/index.styled';
 import { COLORS } from '@/styles/theme';
 
-import TextArea from '@/components/Atoms/TextArea';
 import Label from '@/components/Atoms/Label';
 import Icon from '@/components/Atoms/Icon';
 import Button from '@/components/Atoms/Button';
 import Table from '@/components/Molecules/Table';
+import TextAreaEditer from '@/components/Molecules/TextAreaEditer';
 import Dropdown from '@/components/Molecules/Dropdown';
 import ReactionContainer from '@/components/Molecules/Comment/ReactionContainer';
 
@@ -21,6 +21,9 @@ import { BUTTON_PROPS, TABLE_ITEM_BUTTON_INFO } from '@/components/Atoms/Button/
 import { AUTHOR_LABEL_PROPS, EDIT_BUTTON_PROPS } from '@/components/Molecules/Comment/constants';
 import { ModalState } from '@/components/Modal';
 import { DEFAULT_TEXTAREA_MAX_LENGTH } from '@/components/Molecules/TextAreaEditer/constants';
+
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 interface CommentTypes {
   issueId: number;
@@ -112,7 +115,7 @@ const Comment = ({
 
   return isEdit ? (
     <S.TextArea>
-      <TextArea textAreaValue={textAreaValue} handleOnChange={handleOnChangeComment} />
+      <TextAreaEditer textAreaValue={textAreaValue} handleOnChange={handleOnChangeComment} />
       <S.TextAreaButtonTab>
         <Button {...{ ...BUTTON_PROPS.CANCEL, label: '편집 취소' }} handleOnClick={handleEditCancelButtonClick} />
         <Button
@@ -150,7 +153,9 @@ const Comment = ({
       }
       item={[
         <S.CommentContent>
-          <span>{content}</span>
+          <ReactMarkdown className="markdown" remarkPlugins={[remarkGfm]}>
+            {content}
+          </ReactMarkdown>
           {hasReaction && (
             <ReactionContainer
               reactions={reactions!}
