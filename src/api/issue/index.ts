@@ -177,3 +177,23 @@ export const createNewIssue = async ({ newIssueFormData, memberId }: CreateNewIs
     throw err;
   }
 };
+
+interface SideBarModifyTypes {
+  method: 'delete' | 'post';
+  issueId: number;
+  category: 'labels' | 'assignees' | 'milestone';
+  categoryId: number;
+}
+
+export const IssueSideBarModify = async ({ method, issueId, category, categoryId }: SideBarModifyTypes) => {
+  try {
+    const { data } = await axios({
+      url: `api/issues/${issueId}/${category}/${categoryId}`,
+      method,
+    });
+    return data;
+  } catch (error) {
+    const err = error as AxiosError;
+    throw err;
+  }
+};

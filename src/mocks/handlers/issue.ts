@@ -1,12 +1,13 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { rest } from 'msw';
-import { issueTable } from '@/mocks/tables/issue';
+import { issues, issueTable } from '@/mocks/tables/issue';
 import { REACTIONS } from '@/components/Molecules/Dropdown/Panel/Reaction/mock';
 import { CommentsTypes, ContentTypes, IssuesTypes, ReactionResponseTypes } from '@/api/issue/types';
 import { userTable } from '@/mocks/handlers/auth';
-import { USER_LIST } from '@/components/Molecules/Dropdown/mock';
+import { MILESTONE_LIST, USER_LIST } from '@/components/Molecules/Dropdown/mock';
 import { responseNewIssueData } from '@/mocks/tables/newIssueHelper';
 import { doubleQuotationReg, issueStateReg, OPEN_QUERY } from '@/hooks/useFilter';
+import { labelTable } from '@/mocks/handlers/label';
 
 const message = {
   message: '',
@@ -387,5 +388,141 @@ export const issueHandlers = [
     issueTable.openIssues.push(newIssue);
 
     return res(ctx.status(200), ctx.json(newIssue));
+  }),
+
+  //  sidebar 레이블 추가 / 삭제
+  rest.post('api/issues/:issueId/labels/:labelId', async (req, res, ctx) => {
+    const { issueId, labelId } = req.params;
+
+    const findOpenIssues = issueTable.openIssues.find((el) => el.id === Number(issueId));
+    const findCloseIssues = issueTable.closedIssues.find((el) => el.id === Number(issueId));
+
+    const findLabel = labelTable.find((label) => label.id === Number(labelId));
+    if (findOpenIssues) {
+      findOpenIssues.issueLabels.issueLabels.push(findLabel!);
+      return res(ctx.status(200), ctx.json(issues));
+    }
+
+    if (findCloseIssues) {
+      findCloseIssues.issueLabels.issueLabels.push(findLabel!);
+      return res(ctx.status(200), ctx.json(issues));
+    }
+
+    return res(ctx.status(200), ctx.json(issues));
+  }),
+
+  rest.delete('api/issues/:issueId/labels/:labelId', async (req, res, ctx) => {
+    const { issueId, labelId } = req.params;
+
+    const findOpenIssues = issueTable.openIssues.find((el) => el.id === Number(issueId));
+    const findCloseIssues = issueTable.closedIssues.find((el) => el.id === Number(issueId));
+
+    const findLabel = labelTable.find((label) => label.id === Number(labelId));
+    if (findOpenIssues) {
+      findOpenIssues.issueLabels.issueLabels = findOpenIssues.issueLabels.issueLabels.filter(
+        (label) => label.id !== findLabel!.id,
+      );
+
+      return res(ctx.status(200), ctx.json(issues));
+    }
+
+    if (findCloseIssues) {
+      findCloseIssues.issueLabels.issueLabels = findCloseIssues.issueLabels.issueLabels.filter(
+        (label) => label.id !== findLabel!.id,
+      );
+
+      return res(ctx.status(200), ctx.json(issues));
+    }
+
+    return res(ctx.status(200), ctx.json(issues));
+  }),
+
+  // sidebar 담당자 추가 / 삭제
+  rest.post('api/issues/:issueId/assignees/:assigneesId', async (req, res, ctx) => {
+    const { issueId, assigneesId } = req.params;
+
+    const findOpenIssues = issueTable.openIssues.find((el) => el.id === Number(issueId));
+    const findCloseIssues = issueTable.closedIssues.find((el) => el.id === Number(issueId));
+
+    const findAssinees = USER_LIST.find((label) => label.id === Number(assigneesId));
+    if (findOpenIssues) {
+      findOpenIssues.issueAssignees.issueAssignees.push(findAssinees!);
+
+      return res(ctx.status(200), ctx.json(issues));
+    }
+
+    if (findCloseIssues) {
+      findCloseIssues.issueAssignees.issueAssignees.push(findAssinees!);
+
+      return res(ctx.status(200), ctx.json(issues));
+    }
+
+    return res(ctx.status(200), ctx.json(issues));
+  }),
+
+  rest.delete('api/issues/:issueId/assignees/:assigneesId', async (req, res, ctx) => {
+    const { issueId, assigneesId } = req.params;
+
+    const findOpenIssues = issueTable.openIssues.find((el) => el.id === Number(issueId));
+    const findCloseIssues = issueTable.closedIssues.find((el) => el.id === Number(issueId));
+
+    const findAssinees = USER_LIST.find((label) => label.id === Number(assigneesId));
+    if (findOpenIssues) {
+      findOpenIssues.issueAssignees.issueAssignees = findOpenIssues.issueAssignees.issueAssignees.filter(
+        (assignee) => assignee.id !== findAssinees!.id,
+      );
+      return res(ctx.status(200), ctx.json(issues));
+    }
+
+    if (findCloseIssues) {
+      findCloseIssues!.issueAssignees.issueAssignees = findCloseIssues.issueAssignees.issueAssignees.filter(
+        (assignee) => assignee.id !== findAssinees!.id,
+      );
+      return res(ctx.status(200), ctx.json(issues));
+    }
+
+    return res(ctx.status(200), ctx.json(issues));
+  }),
+
+  // sidebar 마일스톤 추가 / 삭제
+  rest.post('api/issues/:issueId/milestone/:milestoneId', async (req, res, ctx) => {
+    const { issueId, milestoneId } = req.params;
+
+    const findOpenIssues = issueTable.openIssues.find((el) => el.id === Number(issueId));
+    const findCloseIssues = issueTable.closedIssues.find((el) => el.id === Number(issueId));
+
+    const findMilestone = MILESTONE_LIST.find((label) => label.id === Number(milestoneId));
+    if (findOpenIssues) {
+      findOpenIssues.milestone = findMilestone!;
+      return res(ctx.status(200), ctx.json(issues));
+    }
+
+    if (findCloseIssues) {
+      findCloseIssues.milestone = findMilestone!;
+      return res(ctx.status(200), ctx.json(issues));
+    }
+
+    return res(ctx.status(200), ctx.json(issues));
+  }),
+
+  rest.delete('api/issues/:issueId/milestone/:milestoneId', async (req, res, ctx) => {
+    const { issueId, milestoneId } = req.params;
+
+    const findOpenIssues = issueTable.openIssues.find((el) => el.id === Number(issueId));
+    const findCloseIssues = issueTable.closedIssues.find((el) => el.id === Number(issueId));
+
+    const findMilestone = MILESTONE_LIST.find((label) => label.id === Number(milestoneId));
+
+    if (findOpenIssues) {
+      findOpenIssues.milestone = null;
+      return res(ctx.status(200), ctx.json(issues));
+    }
+
+    if (findCloseIssues) {
+      findCloseIssues.milestone = null;
+      return res(ctx.status(200), ctx.json(issues));
+    }
+
+    return res(ctx.status(200), ctx.json(issues));
   }),
 ];
