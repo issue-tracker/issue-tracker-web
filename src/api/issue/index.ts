@@ -178,6 +178,16 @@ export const createNewIssue = async ({ newIssueFormData, memberId }: CreateNewIs
   }
 };
 
+export const deleteIssue = async (issueId: number) => {
+  try {
+    const { data } = await axios.delete(`api/issues/${issueId}`);
+    return data;
+  } catch (error) {
+    const err = error as AxiosError;
+    throw err;
+  }
+};
+
 interface SideBarModifyTypes {
   method: 'delete' | 'post';
   issueId: number;
