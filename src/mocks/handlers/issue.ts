@@ -393,16 +393,16 @@ export const issueHandlers = [
   rest.delete('api/issues/:issueId', async (req, res, ctx) => {
     const { issueId } = req.params;
 
-    const findOpenIssues = issues.openIssues.content.find((el) => el.id === Number(issueId));
-    const findCloseIssues = issues.closedIssues.content.find((el) => el.id === Number(issueId));
+    const findOpenIssues = issueTable.openIssues.find((el) => el.id === Number(issueId));
+    const findCloseIssues = issueTable.closedIssues.find((el) => el.id === Number(issueId));
 
     if (findOpenIssues) {
-      issues.openIssues.content = issues.openIssues.content.filter((el) => el.id !== Number(issueId));
+      issueTable.openIssues = issueTable.openIssues.filter((el) => el.id !== Number(issueId));
       return res(ctx.status(200), ctx.json(issues));
     }
 
     if (findCloseIssues) {
-      issues.closedIssues.content = issues.closedIssues.content.filter((el) => el.id !== Number(issueId));
+      issueTable.closedIssues = issueTable.closedIssues.filter((el) => el.id !== Number(issueId));
       return res(ctx.status(200), ctx.json(issues));
     }
 
