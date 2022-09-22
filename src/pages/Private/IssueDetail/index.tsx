@@ -1,51 +1,39 @@
 import React, { useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { useParams } from 'react-router-dom';
 import { LoginUserInfoState } from '@/stores/loginUserInfo';
 import useFetchIssue from '@/api/issue/useFetchIssue';
 
-import { COLORS } from '@/styles/theme';
 import * as S from '@/pages/Private/IssueDetail/index.styled';
-
 import Button from '@/components/Atoms/Button';
 import { BUTTON_PROPS } from '@/components/Atoms/Button/options';
 import TextArea from '@/components/Atoms/TextArea';
 import UserImage from '@/components/Atoms/UserImage';
 import Comment from '@/components/Molecules/Comment';
-import SideBar from '@/components/Molecules/SideBar';
 import IssueHeader from '@/components/Organisms/IssueHeader';
 import IsssueDetailAside from '@/pages/Private/IssueDetail/Aside';
-import Modal, { ModalState } from '@/components/Modal';
-import DeleteCheck from '@/components/Modal/DeleteCheck';
+
 import { DEFAULT_TEXTAREA_MAX_LENGTH } from '@/components/Molecules/TextAreaEditer/constants';
 
 const IssueDetail = (): JSX.Element => {
   const { issueId } = useParams();
-  const { useIssueData, useAddIssueComment, useDeleteIssueComment } = useFetchIssue();
+  const { useIssueData, useAddIssueComment } = useFetchIssue(Number(issueId));
   const { data: issue } = useIssueData(Number(issueId));
   const { mutate: addIssueComment } = useAddIssueComment(Number(issueId));
-  const { mutate: deleteIssueComment } = useDeleteIssueComment(Number(issueId));
 
   const { id, closed, title, createdAt, lastModifiedAt, author, comments } = issue!;
 
   const userInfo = useRecoilValue(LoginUserInfoState);
   const memberId = userInfo.id;
   const [textAreaValue, setTextAreaValue] = useState<string>('');
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useRecoilState(ModalState);
-  const [selectCommentId, setSelectCommentId] = useState<number>(0);
+  const [_, setSelectCommentId] = useState<number>(0);
 
   const isTypingNewComment = !textAreaValue;
-  const isIssueAuthor = memberId === author.id;
 
   const handleAddCommentButton = () => {
     const newComment = { content: textAreaValue };
     addIssueComment({ newComment, memberId, issueId: Number(issueId) });
     setTextAreaValue('');
-  };
-
-  const handleDeleteCommentButton = () => {
-    deleteIssueComment({ issueId: id, commentId: selectCommentId, memberId });
-    setIsDeleteModalOpen(false);
   };
 
   const handleOnChangeNewComment = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -94,11 +82,6 @@ const IssueDetail = (): JSX.Element => {
         </S.IssueComments>
         <IsssueDetailAside issue={issue!} memberId={memberId} />
       </S.IssueContent>
-      {isDeleteModalOpen && (
-        <Modal>
-          <DeleteCheck handleDeleteButtonClick={handleDeleteCommentButton} />
-        </Modal>
-      )}
     </>
   );
 };

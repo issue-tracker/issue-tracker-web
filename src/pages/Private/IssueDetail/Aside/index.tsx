@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react';
 import { ContentTypes, MilestoneTypes } from '@/api/issue/types';
+import useFetchIssue from '@/api/issue/useFetchIssue';
 import useFetchSideBarData from '@/api/useFetchSideBarData';
 
 import { COLORS } from '@/styles/theme';
@@ -8,10 +9,17 @@ import * as S from '@/pages/Private/IssueDetail/index.styled';
 import Button from '@/components/Atoms/Button';
 import SideBar from '@/components/Molecules/SideBar';
 
+import Modal, { ModalState } from '@/components/Modal';
+import DeleteCheck from '@/components/Modal/DeleteCheck';
+
 import { ContentListTypes, isMilestoneTypes, UpdateSideBarFuncTypes } from '@/components/Molecules/SideBar/types';
 import { filterUncheckedItem, getFindDropdownItem } from '@/components/Molecules/SideBar/utils';
+import { useRecoilState } from 'recoil';
 
 const IsssueDetailAside = ({ issue, memberId }: { issue: ContentTypes; memberId: number }) => {
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useRecoilState(ModalState);
+  const [isDeleteIssueModalOpen, setIsDeleteIssueModalOpen] = useState(false);
+
   const milestoneArr: MilestoneTypes[] = [];
   const DEFAULT_CONTENT_LIST: ContentListTypes = {
     label: issue!.issueLabels.issueLabels,
@@ -19,6 +27,7 @@ const IsssueDetailAside = ({ issue, memberId }: { issue: ContentTypes; memberId:
     milestone: issue!.milestone === null ? milestoneArr : [issue!.milestone],
   };
 
+  const { deleteIssueMutate } = useFetchIssue(issue.id);
   const { IssueSideBarModifyMutate } = useFetchSideBarData();
   const [contentList, setContentList] = useState(DEFAULT_CONTENT_LIST);
 
@@ -86,21 +95,35 @@ const IsssueDetailAside = ({ issue, memberId }: { issue: ContentTypes; memberId:
     }
   };
 
+  const handleDeleteCommentButton = () => {
+    deleteIssueMutate(issue.id);
+    setIsDeleteIssueModalOpen(false);
+    setIsDeleteModalOpen(false);
+  };
+
   return (
-    <S.Aside>
-      <SideBar content={contentList} handleOnChange={updateSideBarItemState} />
-      {isIssueAuthor && (
-        <Button
-          buttonStyle="NO_BORDER"
-          iconInfo={{
-            icon: 'Trash',
-            stroke: COLORS.ERROR.RED,
-          }}
-          label="이슈 삭제"
-          size="SMALL"
-        />
+    <>
+      <S.Aside>
+        <SideBar content={contentList} handleOnChange={updateSideBarItemState} />
+        {isIssueAuthor && (
+          <Button
+            buttonStyle="NO_BORDER"
+            iconInfo={{ icon: 'Trash', stroke: COLORS.ERROR.RED }}
+            label="이슈 삭제"
+            size="SMALL"
+            handleOnClick={() => {
+              setIsDeleteModalOpen(true);
+              setIsDeleteIssueModalOpen(true);
+            }}
+          />
+        )}
+      </S.Aside>
+      {isDeleteModalOpen && isDeleteIssueModalOpen && (
+        <Modal>
+          <DeleteCheck handleDeleteButtonClick={handleDeleteCommentButton} />
+        </Modal>
       )}
-    </S.Aside>
+    </>
   );
 };
 
