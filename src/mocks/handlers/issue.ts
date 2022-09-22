@@ -202,6 +202,14 @@ export const issueHandlers = [
     const newIssue = { ...issue, title };
     updateIssueTable(newIssue);
 
+    const history: IssueHistoryTypes = changeTitleHistory({
+      modifierInfo: USER_LIST[0],
+      previousTitle: issue.title,
+      changedTitle: title,
+    });
+
+    issue.issueHistories.push(history);
+
     return res(ctx.status(200), ctx.json(newIssue));
   }),
 
