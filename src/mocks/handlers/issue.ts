@@ -2,12 +2,19 @@
 import { rest } from 'msw';
 import { issues, issueTable } from '@/mocks/tables/issue';
 import { REACTIONS } from '@/components/Molecules/Dropdown/Panel/Reaction/mock';
-import { CommentsTypes, ContentTypes, IssuesTypes, ReactionResponseTypes } from '@/api/issue/types';
+import { IssuesTypes, CommentsTypes, ContentTypes, IssueHistoryTypes, ReactionResponseTypes } from '@/api/issue/types';
 import { userTable } from '@/mocks/handlers/auth';
 import { MILESTONE_LIST, USER_LIST } from '@/components/Molecules/Dropdown/mock';
 import { responseNewIssueData } from '@/mocks/tables/newIssueHelper';
 import { doubleQuotationReg, issueStateReg, OPEN_QUERY } from '@/hooks/useFilter';
 import { labelTable } from '@/mocks/handlers/label';
+import {
+  assigneesHistory,
+  changeStateHistory,
+  changeTitleHistory,
+  labelHistory,
+  milestoneHistory,
+} from '@/mocks/tables/issueHistoryHelper';
 
 const message = {
   message: '',
@@ -220,6 +227,12 @@ export const issueHandlers = [
     issueTable.openIssues = openIssuesContent;
     issueTable.closedIssues = closedIssuesContent;
 
+    const history: IssueHistoryTypes = changeStateHistory({
+      modifierInfo: USER_LIST[0],
+      action: status ? 'CLOSE' : 'OPEN',
+    });
+    contents.find((el) => el.id === ids[0])!.issueHistories.push(history);
+
     return res(ctx.status(204));
   }),
 
@@ -419,11 +432,25 @@ export const issueHandlers = [
     const findLabel = labelTable.find((label) => label.id === Number(labelId));
     if (findOpenIssues) {
       findOpenIssues.issueLabels.issueLabels.push(findLabel!);
+
+      const history: IssueHistoryTypes = labelHistory({
+        modifierInfo: USER_LIST[0],
+        labelInfo: findLabel!,
+        action: 'ADD',
+      });
+      findOpenIssues.issueHistories.push(history);
       return res(ctx.status(200), ctx.json(issues));
     }
 
     if (findCloseIssues) {
       findCloseIssues.issueLabels.issueLabels.push(findLabel!);
+
+      const history: IssueHistoryTypes = labelHistory({
+        modifierInfo: USER_LIST[0],
+        labelInfo: findLabel!,
+        action: 'ADD',
+      });
+      findCloseIssues.issueHistories.push(history);
       return res(ctx.status(200), ctx.json(issues));
     }
 
@@ -442,6 +469,13 @@ export const issueHandlers = [
         (label) => label.id !== findLabel!.id,
       );
 
+      const history: IssueHistoryTypes = labelHistory({
+        modifierInfo: USER_LIST[0],
+        labelInfo: findLabel!,
+        action: 'DELETE',
+      });
+      findOpenIssues.issueHistories.push(history);
+
       return res(ctx.status(200), ctx.json(issues));
     }
 
@@ -449,6 +483,13 @@ export const issueHandlers = [
       findCloseIssues.issueLabels.issueLabels = findCloseIssues.issueLabels.issueLabels.filter(
         (label) => label.id !== findLabel!.id,
       );
+
+      const history: IssueHistoryTypes = labelHistory({
+        modifierInfo: USER_LIST[0],
+        labelInfo: findLabel!,
+        action: 'DELETE',
+      });
+      findCloseIssues.issueHistories.push(history);
 
       return res(ctx.status(200), ctx.json(issues));
     }
@@ -467,12 +508,24 @@ export const issueHandlers = [
     if (findOpenIssues) {
       findOpenIssues.issueAssignees.issueAssignees.push(findAssinees!);
 
+      const history: IssueHistoryTypes = assigneesHistory({
+        modifierInfo: USER_LIST[0],
+        assigneeInfo: findAssinees!,
+        action: 'ADD',
+      });
+      findOpenIssues.issueHistories.push(history);
       return res(ctx.status(200), ctx.json(issues));
     }
 
     if (findCloseIssues) {
       findCloseIssues.issueAssignees.issueAssignees.push(findAssinees!);
 
+      const history: IssueHistoryTypes = assigneesHistory({
+        modifierInfo: USER_LIST[0],
+        assigneeInfo: findAssinees!,
+        action: 'ADD',
+      });
+      findCloseIssues.issueHistories.push(history);
       return res(ctx.status(200), ctx.json(issues));
     }
 
@@ -490,6 +543,13 @@ export const issueHandlers = [
       findOpenIssues.issueAssignees.issueAssignees = findOpenIssues.issueAssignees.issueAssignees.filter(
         (assignee) => assignee.id !== findAssinees!.id,
       );
+
+      const history: IssueHistoryTypes = assigneesHistory({
+        modifierInfo: USER_LIST[0],
+        assigneeInfo: findAssinees!,
+        action: 'DELETE',
+      });
+      findOpenIssues.issueHistories.push(history);
       return res(ctx.status(200), ctx.json(issues));
     }
 
@@ -497,6 +557,13 @@ export const issueHandlers = [
       findCloseIssues!.issueAssignees.issueAssignees = findCloseIssues.issueAssignees.issueAssignees.filter(
         (assignee) => assignee.id !== findAssinees!.id,
       );
+
+      const history: IssueHistoryTypes = assigneesHistory({
+        modifierInfo: USER_LIST[0],
+        assigneeInfo: findAssinees!,
+        action: 'DELETE',
+      });
+      findCloseIssues.issueHistories.push(history);
       return res(ctx.status(200), ctx.json(issues));
     }
 
@@ -513,11 +580,25 @@ export const issueHandlers = [
     const findMilestone = MILESTONE_LIST.find((label) => label.id === Number(milestoneId));
     if (findOpenIssues) {
       findOpenIssues.milestone = findMilestone!;
+
+      const history: IssueHistoryTypes = milestoneHistory({
+        modifierInfo: USER_LIST[0],
+        milestoneInfo: findMilestone!,
+        action: 'ADD',
+      });
+      findOpenIssues.issueHistories.push(history);
       return res(ctx.status(200), ctx.json(issues));
     }
 
     if (findCloseIssues) {
       findCloseIssues.milestone = findMilestone!;
+
+      const history: IssueHistoryTypes = milestoneHistory({
+        modifierInfo: USER_LIST[0],
+        milestoneInfo: findMilestone!,
+        action: 'ADD',
+      });
+      findCloseIssues.issueHistories.push(history);
       return res(ctx.status(200), ctx.json(issues));
     }
 
@@ -534,11 +615,25 @@ export const issueHandlers = [
 
     if (findOpenIssues) {
       findOpenIssues.milestone = null;
+
+      const history: IssueHistoryTypes = milestoneHistory({
+        modifierInfo: USER_LIST[0],
+        milestoneInfo: findMilestone!,
+        action: 'DELETE',
+      });
+      findOpenIssues.issueHistories.push(history);
       return res(ctx.status(200), ctx.json(issues));
     }
 
     if (findCloseIssues) {
       findCloseIssues.milestone = null;
+
+      const history: IssueHistoryTypes = milestoneHistory({
+        modifierInfo: USER_LIST[0],
+        milestoneInfo: findMilestone!,
+        action: 'DELETE',
+      });
+      findCloseIssues.issueHistories.push(history);
       return res(ctx.status(200), ctx.json(issues));
     }
 

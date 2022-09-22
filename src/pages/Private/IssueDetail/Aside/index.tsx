@@ -41,7 +41,7 @@ const IsssueDetailAside = ({ issue, memberId }: { issue: ContentTypes; memberId:
     const contentKey = panel as keyof ContentListTypes;
 
     if (contentKey === 'milestone' && checked) {
-      if (id !== 'none' && isMilestoneTypes(findDropdownItem!)) {
+      if (id !== 'no:milestone' && isMilestoneTypes(findDropdownItem!)) {
         if (contentList.milestone.length) {
           setContentList({ ...contentList, [contentKey]: [] });
           IssueSideBarModifyMutate({
