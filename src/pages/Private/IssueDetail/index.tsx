@@ -14,6 +14,7 @@ import UserImage from '@/components/Atoms/UserImage';
 import Comment from '@/components/Molecules/Comment';
 import SideBar from '@/components/Molecules/SideBar';
 import IssueHeader from '@/components/Organisms/IssueHeader';
+import IsssueDetailAside from '@/pages/Private/IssueDetail/Aside';
 import Modal, { ModalState } from '@/components/Modal';
 import DeleteCheck from '@/components/Modal/DeleteCheck';
 import { DEFAULT_TEXTAREA_MAX_LENGTH } from '@/components/Molecules/TextAreaEditer/constants';
@@ -91,19 +92,7 @@ const IssueDetail = (): JSX.Element => {
           </S.NewComment>
           <Button {...BUTTON_PROPS.ADD} disabled={isTypingNewComment} handleOnClick={handleAddCommentButton} />
         </S.IssueComments>
-        <S.Aside>
-          {isIssueAuthor && (
-            <Button
-              buttonStyle="NO_BORDER"
-              iconInfo={{
-                icon: 'Trash',
-                stroke: COLORS.ERROR.RED,
-              }}
-              label="이슈 삭제"
-              size="SMALL"
-            />
-          )}
-        </S.Aside>
+        <IsssueDetailAside issue={issue!} memberId={memberId} />
       </S.IssueContent>
       {isDeleteModalOpen && (
         <Modal>
