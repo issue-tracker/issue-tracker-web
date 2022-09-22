@@ -95,6 +95,7 @@ const IssueDetail = (): JSX.Element => {
                     isAuthor={isCommentAuthor}
                     comment={content}
                     setSelectCommentId={setSelectCommentId}
+                    isMainComment={index === 0}
                   />
                 </S.Comment>
               );

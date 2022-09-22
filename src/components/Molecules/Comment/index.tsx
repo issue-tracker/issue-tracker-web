@@ -28,6 +28,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
 interface CommentTypes {
+  isMainComment: boolean;
   issueId: number;
   isAuthor: boolean;
   comment: CommentsTypes;
@@ -66,6 +67,7 @@ export const definedUsedEmojis = (issueCommentReactionsResponse: ReactionRespons
 };
 
 const Comment = ({
+  isMainComment,
   issueId,
   isAuthor,
   comment,
@@ -149,7 +151,9 @@ const Comment = ({
                 <>
                   <Label {...AUTHOR_LABEL_PROPS} />
                   <Button {...EDIT_BUTTON_PROPS} handleOnClick={handleEditButtonClick} />
-                  <Button {...TABLE_ITEM_BUTTON_INFO.DELETE} handleOnClick={handleDeleteButtonClick} />
+                  {!isMainComment && (
+                    <Button {...TABLE_ITEM_BUTTON_INFO.DELETE} handleOnClick={handleDeleteButtonClick} />
+                  )}
                 </>
               )}
               <Dropdown
@@ -181,7 +185,7 @@ const Comment = ({
           </S.CommentContent>,
         ]}
       />
-      {isDeleteModalOpen && isCommentModalOpen && (
+      {!isMainComment && isDeleteModalOpen && isCommentModalOpen && (
         <Modal>
           <DeleteCheck handleDeleteButtonClick={handleDeleteCommentButton} />
         </Modal>
