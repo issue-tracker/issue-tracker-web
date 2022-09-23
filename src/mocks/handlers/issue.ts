@@ -579,7 +579,7 @@ export const issueHandlers = [
   }),
 
   // sidebar 마일스톤 추가 / 삭제
-  rest.post('api/issues/:issueId/milestone/:milestoneId', async (req, res, ctx) => {
+  rest.patch('api/issues/:issueId/milestone/:milestoneId', async (req, res, ctx) => {
     const { issueId, milestoneId } = req.params;
 
     const findOpenIssues = issueTable.openIssues.find((el) => el.id === Number(issueId));

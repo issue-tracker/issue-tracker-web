@@ -1350,7 +1350,7 @@ export const issueTable: IssuesTableTypes = {
             profileImage: 'https://avatars.githubusercontent.com/u/85747667?v=4',
           },
           modifiedAt: '2022-09-20T16:46:53.479Z',
-          action: 'DELETE_ASSIGNEE',
+          action: 'REMOVE_ASSIGNEE',
           label: null,
           milestone: null,
           assignee: {
@@ -1372,7 +1372,7 @@ export const issueTable: IssuesTableTypes = {
             profileImage: 'https://avatars.githubusercontent.com/u/85747667?v=4',
           },
           modifiedAt: '2022-09-20T16:46:53.479Z',
-          action: 'DELETE_MILESTONE',
+          action: 'REMOVE_MILESTONE',
           label: null,
           milestone: {
             createdAt: '2022-09-19T06:46:53.479Z',

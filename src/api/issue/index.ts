@@ -189,16 +189,18 @@ export const deleteIssue = async (issueId: number) => {
 };
 
 interface SideBarModifyTypes {
-  method: 'delete' | 'post';
+  method: 'delete' | 'post' | 'patch';
   issueId: number;
   category: 'labels' | 'assignees' | 'milestone';
   categoryId: number;
 }
 
 export const IssueSideBarModify = async ({ method, issueId, category, categoryId }: SideBarModifyTypes) => {
+  // 일괄삭제 구현x
+  const assigneesUrl = method === 'delete' ? `?clear=false}&assigneeId=${categoryId}` : `${categoryId}`;
   try {
     const { data } = await axios({
-      url: `api/issues/${issueId}/${category}/${categoryId}`,
+      url: `api/issues/${issueId}/${category}/${category === 'assignees' ? assigneesUrl : categoryId}`,
       method,
     });
     return data;

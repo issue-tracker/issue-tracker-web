@@ -42,19 +42,9 @@ const IsssueDetailAside = ({ issue, memberId }: { issue: ContentTypes; memberId:
 
     if (contentKey === 'milestone' && checked) {
       if (id !== 'no:milestone' && isMilestoneTypes(findDropdownItem!)) {
-        if (contentList.milestone.length) {
-          setContentList({ ...contentList, [contentKey]: [] });
-          IssueSideBarModifyMutate({
-            method: 'delete',
-            issueId: issue.id,
-            category: contentKey,
-            categoryId: contentList.milestone[0].id,
-          });
-        }
-
         setContentList({ ...contentList, [contentKey]: [findDropdownItem] });
         IssueSideBarModifyMutate({
-          method: 'post',
+          method: 'patch',
           issueId: issue.id,
           category: contentKey,
           categoryId: findDropdownItem!.id,
