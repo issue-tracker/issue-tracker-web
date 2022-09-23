@@ -480,7 +480,7 @@ export const issueHandlers = [
       const history: IssueHistoryTypes = labelHistory({
         modifierInfo: USER_LIST[0],
         labelInfo: findLabel!,
-        action: 'DELETE',
+        action: 'REMOVE',
       });
       findOpenIssues.issueHistories.push(history);
 
@@ -495,7 +495,7 @@ export const issueHandlers = [
       const history: IssueHistoryTypes = labelHistory({
         modifierInfo: USER_LIST[0],
         labelInfo: findLabel!,
-        action: 'DELETE',
+        action: 'REMOVE',
       });
       findCloseIssues.issueHistories.push(history);
 
@@ -555,7 +555,7 @@ export const issueHandlers = [
       const history: IssueHistoryTypes = assigneesHistory({
         modifierInfo: USER_LIST[0],
         assigneeInfo: findAssinees!,
-        action: 'DELETE',
+        action: 'REMOVE',
       });
       findOpenIssues.issueHistories.push(history);
       return res(ctx.status(200), ctx.json(issues));
@@ -569,7 +569,7 @@ export const issueHandlers = [
       const history: IssueHistoryTypes = assigneesHistory({
         modifierInfo: USER_LIST[0],
         assigneeInfo: findAssinees!,
-        action: 'DELETE',
+        action: 'REMOVE',
       });
       findCloseIssues.issueHistories.push(history);
       return res(ctx.status(200), ctx.json(issues));
@@ -627,7 +627,7 @@ export const issueHandlers = [
       const history: IssueHistoryTypes = milestoneHistory({
         modifierInfo: USER_LIST[0],
         milestoneInfo: findMilestone!,
-        action: 'DELETE',
+        action: 'REMOVE',
       });
       findOpenIssues.issueHistories.push(history);
       return res(ctx.status(200), ctx.json(issues));
@@ -639,7 +639,7 @@ export const issueHandlers = [
       const history: IssueHistoryTypes = milestoneHistory({
         modifierInfo: USER_LIST[0],
         milestoneInfo: findMilestone!,
-        action: 'DELETE',
+        action: 'REMOVE',
       });
       findCloseIssues.issueHistories.push(history);
       return res(ctx.status(200), ctx.json(issues));

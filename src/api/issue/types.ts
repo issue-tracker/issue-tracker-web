@@ -62,11 +62,11 @@ export type HistoryActionTypes =
   | 'OPEN_ISSUE'
   | 'CLOSE_ISSUE'
   | 'ADD_LABEL'
-  | 'DELETE_LABEL'
+  | 'REMOVE_LABEL'
   | 'ADD_ASSIGNEE'
-  | 'DELETE_ASSIGNEE'
+  | 'REMOVE_ASSIGNEE'
   | 'ADD_MILESTONE'
-  | 'DELETE_MILESTONE';
+  | 'REMOVE_MILESTONE';
 
 export interface IssueHistoryTypes {
   modifier: UserTypes;

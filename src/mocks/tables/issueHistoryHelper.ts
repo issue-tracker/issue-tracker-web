@@ -8,7 +8,7 @@ export const assigneesHistory = ({
 }: {
   modifierInfo: UserTypes;
   assigneeInfo: UserTypes;
-  action: 'ADD' | 'DELETE';
+  action: 'ADD' | 'REMOVE';
 }) =>
   ({
     modifier: { ...modifierInfo },
@@ -32,7 +32,7 @@ export const labelHistory = ({
 }: {
   modifierInfo: UserTypes;
   labelInfo: LabelType;
-  action: 'ADD' | 'DELETE';
+  action: 'ADD' | 'REMOVE';
 }) =>
   ({
     modifier: { ...modifierInfo },
@@ -56,7 +56,7 @@ export const milestoneHistory = ({
 }: {
   modifierInfo: UserTypes;
   milestoneInfo: MilestoneTypes;
-  action: 'ADD' | 'DELETE';
+  action: 'ADD' | 'REMOVE';
 }) =>
   ({
     modifier: { ...modifierInfo },

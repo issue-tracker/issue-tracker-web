@@ -11,11 +11,11 @@ const ACTION_MESSAGE = {
   OPEN_ISSUE: 'reopened this',
   CLOSE_ISSUE: 'closed this as completed',
   ADD_LABEL: 'added',
-  DELETE_LABEL: 'removed',
+  REMOVE_LABEL: 'removed',
   ADD_ASSIGNEE: 'assigned',
-  DELETE_ASSIGNEE: 'unassigned',
+  REMOVE_ASSIGNEE: 'unassigned',
   ADD_MILESTONE: 'added this to the',
-  DELETE_MILESTONE: 'removed this from the',
+  REMOVE_MILESTONE: 'removed this from the',
 };
 
 const IssueHistory = ({ ...props }: IssueHistoryTypes) => {
@@ -52,13 +52,13 @@ const IssueHistory = ({ ...props }: IssueHistoryTypes) => {
       case 'CHANGE_TITLE':
         return changeTitle();
       case 'ADD_ASSIGNEE':
-      case 'DELETE_ASSIGNEE':
+      case 'REMOVE_ASSIGNEE':
         return changeAssignee();
       case 'ADD_LABEL':
-      case 'DELETE_LABEL':
+      case 'REMOVE_LABEL':
         return changeLabel();
       case 'ADD_MILESTONE':
-      case 'DELETE_MILESTONE':
+      case 'REMOVE_MILESTONE':
         return changeMilestone();
     }
   };
