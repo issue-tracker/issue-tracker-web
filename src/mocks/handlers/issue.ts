@@ -411,6 +411,11 @@ export const issueHandlers = [
     return res(ctx.status(200), ctx.json(newIssue));
   }),
 
+  rest.post('api/images/upload', async (req, res, ctx) => {
+    const responseFileUrl = 'https://avatars.githubusercontent.com/u/85747667?s=96&v=4';
+    return res(ctx.status(200), ctx.json(responseFileUrl));
+  }),
+
   rest.delete('api/issues/:issueId', async (req, res, ctx) => {
     const { issueId } = req.params;
 
