@@ -511,13 +511,13 @@ export const issueHandlers = [
   }),
 
   // sidebar 담당자 추가 / 삭제
-  rest.post('api/issues/:issueId/assignees/:assigneesId', async (req, res, ctx) => {
-    const { issueId, assigneesId } = req.params;
+  rest.post('api/issues/:issueId/assignees/:assigneeId', async (req, res, ctx) => {
+    const { issueId, assigneeId } = req.params;
 
     const findOpenIssues = issueTable.openIssues.find((el) => el.id === Number(issueId));
     const findCloseIssues = issueTable.closedIssues.find((el) => el.id === Number(issueId));
 
-    const findAssinees = USER_LIST.find((label) => label.id === Number(assigneesId));
+    const findAssinees = USER_LIST.find((label) => label.id === Number(assigneeId));
     if (findOpenIssues) {
       findOpenIssues.issueAssignees.issueAssignees.push(findAssinees!);
 
@@ -545,13 +545,14 @@ export const issueHandlers = [
     return res(ctx.status(200), ctx.json(issues));
   }),
 
-  rest.delete('api/issues/:issueId/assignees/:assigneesId', async (req, res, ctx) => {
-    const { issueId, assigneesId } = req.params;
+  rest.delete('api/issues/:issueId/assignees?clear=false', async (req, res, ctx) => {
+    const { issueId } = req.params;
+    const assigneeId = Number(req.url.searchParams.get('assigneeId'));
 
     const findOpenIssues = issueTable.openIssues.find((el) => el.id === Number(issueId));
     const findCloseIssues = issueTable.closedIssues.find((el) => el.id === Number(issueId));
 
-    const findAssinees = USER_LIST.find((label) => label.id === Number(assigneesId));
+    const findAssinees = USER_LIST.find((label) => label.id === Number(assigneeId));
     if (findOpenIssues) {
       findOpenIssues.issueAssignees.issueAssignees = findOpenIssues.issueAssignees.issueAssignees.filter(
         (assignee) => assignee.id !== findAssinees!.id,

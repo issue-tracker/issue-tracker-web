@@ -197,10 +197,10 @@ interface SideBarModifyTypes {
 
 export const IssueSideBarModify = async ({ method, issueId, category, categoryId }: SideBarModifyTypes) => {
   // 일괄삭제 구현x
-  const assigneesUrl = method === 'delete' ? `?clear=false}&assigneeId=${categoryId}` : `${categoryId}`;
+  const assigneesUrl = method === 'delete' ? `?clear=false&assigneeId=${categoryId}` : `/${categoryId}`;
   try {
     const { data } = await axios({
-      url: `api/issues/${issueId}/${category}/${category === 'assignees' ? assigneesUrl : categoryId}`,
+      url: `api/issues/${issueId}/${category}${category === 'assignees' ? assigneesUrl : `/${categoryId}`}`,
       method,
     });
     return data;
