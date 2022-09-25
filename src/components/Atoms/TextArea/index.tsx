@@ -38,10 +38,12 @@ const TextArea = ({ edit, textAreaValue, setTextAreaValue }: TextAreaTypes) => {
     const markdownImg = `\n![](${data})\n`;
 
     if (edit === 'ISSUE') {
+      textAreaRef.current!.value += markdownImg;
       setNewIssueFormState({ ...newIssueFormState, comment: `${newIssueFormState.comment} ${markdownImg}` });
     }
 
     if (edit === 'COMMENT') {
+      textAreaRef.current!.value += markdownImg;
       setTextAreaValue?.(`${textAreaValue} ${markdownImg}`);
     }
   };
@@ -79,6 +81,7 @@ const TextArea = ({ edit, textAreaValue, setTextAreaValue }: TextAreaTypes) => {
   const handleOnTypingTextArea = debounce(timerId, handleOnChangeTextArea, DEBOUNC_DELAY);
 
   useEffect(() => {
+    if (textAreaRef.current) textAreaRef.current.value = textAreaValue;
     if (textAreaRef.current && !textAreaValue) textAreaRef.current.value = '';
   }, [textAreaValue]);
 
