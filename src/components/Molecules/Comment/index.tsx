@@ -111,16 +111,6 @@ const Comment = ({
     setSelectCommentId(commentId);
   };
 
-  const handleOnChangeComment = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const { value } = event.target;
-    if (!value) return setTextAreaValue('');
-    if (Number(value) >= DEFAULT_TEXTAREA_MAX_LENGTH) {
-      // eslint-disable-next-line no-param-reassign
-      event.target.value = value.slice(0, DEFAULT_TEXTAREA_MAX_LENGTH);
-    }
-    return setTextAreaValue(value);
-  };
-
   const handleDeleteCommentButton = () => {
     deleteIssueComment({ issueId, commentId, memberId });
     setCommentModalOpen(false);
@@ -129,7 +119,7 @@ const Comment = ({
 
   return isEdit ? (
     <S.TextArea>
-      <TextAreaEditer textAreaValue={textAreaValue} handleOnChange={handleOnChangeComment} />
+      <TextAreaEditer edit="COMMENT" textAreaValue={textAreaValue} setTextAreaValue={setTextAreaValue} />
       <S.TextAreaButtonTab>
         <Button {...{ ...BUTTON_PROPS.CANCEL, label: '편집 취소' }} handleOnClick={handleEditCancelButtonClick} />
         <Button

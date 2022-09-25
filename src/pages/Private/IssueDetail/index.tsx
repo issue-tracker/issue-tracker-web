@@ -16,8 +16,6 @@ import IssueHeader from '@/components/Organisms/IssueHeader';
 import IsssueDetailAside from '@/pages/Private/IssueDetail/Aside';
 import IssueHistory from '@/pages/Private/IssueDetail/History';
 
-import { DEFAULT_TEXTAREA_MAX_LENGTH } from '@/components/Molecules/TextAreaEditer/constants';
-
 const IssueDetail = (): JSX.Element => {
   const { issueId } = useParams();
   const { useIssueData, useAddIssueComment } = useFetchIssue(Number(issueId));
@@ -37,16 +35,6 @@ const IssueDetail = (): JSX.Element => {
     const newComment = { content: textAreaValue };
     addIssueComment({ newComment, memberId, issueId: Number(issueId) });
     setTextAreaValue('');
-  };
-
-  const handleOnChangeNewComment = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const { value } = event.target;
-    if (!value) return setTextAreaValue('');
-    if (Number(value) >= DEFAULT_TEXTAREA_MAX_LENGTH) {
-      // eslint-disable-next-line no-param-reassign
-      event.target.value = value.slice(0, DEFAULT_TEXTAREA_MAX_LENGTH);
-    }
-    return setTextAreaValue(value);
   };
 
   const TimeLine = [...comments, ...issueHistories];
@@ -107,7 +95,7 @@ const IssueDetail = (): JSX.Element => {
           })}
           <S.NewComment>
             <UserImage {...userInfo} imgSize="MEDIUM" />
-            <TextArea textAreaValue={textAreaValue} handleOnChange={handleOnChangeNewComment} />
+            <TextArea textAreaValue={textAreaValue} setTextAreaValue={setTextAreaValue} edit="COMMENT" />
           </S.NewComment>
           <Button {...BUTTON_PROPS.ADD} disabled={isTypingNewComment} handleOnClick={handleAddCommentButton} />
         </S.IssueComments>
