@@ -15,6 +15,15 @@ const { Initial } = composeStories(SampleIssueDetail);
 
 let DOMContainer = null;
 
+jest.mock(
+  'react-markdown',
+  () =>
+    ({ children }: any) =>
+      children,
+);
+
+jest.mock('remark-gfm', () => () => {});
+
 beforeAll(() => {
   DOMContainer = document.createElement('div');
   document.body.appendChild(DOMContainer);
